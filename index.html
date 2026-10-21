@@ -1,75 +1,685 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Setup</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #111827; color: #f3f4f6; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="color-scheme" content="dark">
+<title>Gym Companion</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<style>
+:root{--bg:#000;--s1:#0d0d10;--s2:#16161a;--s3:#212127;--line:#2c2c34;--tx:#f6f6f8;--mut:#a3a3ae;--acc:#c8f526;--acc-tx:#0b1100;--ok:#22c55e;--warn:#facc15;--bad:#ef4444;--r:16px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 0 calc(84px + env(safe-area-inset-bottom));min-height:100vh}
+h1{font-size:21px;line-height:1.2;margin:0}
+h2{font-size:18px;margin:0 0 10px}
+h3{font-size:15px;margin:0 0 6px;color:var(--mut);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+p{margin:0 0 8px}
+button{font:inherit;color:inherit}
+.wrap{max-width:640px;margin:0 auto;padding:12px 12px 0}
+.top{position:sticky;top:0;z-index:20;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding:calc(8px + env(safe-area-inset-top)) 12px 8px}
+.top .in{max-width:640px;margin:0 auto;display:flex;align-items:center;gap:10px;justify-content:space-between}
+.brand{font-weight:800;letter-spacing:.01em}
+.brand b{color:var(--acc)}
+.datep{color:var(--mut);font-size:14px}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:0 0 12px}
+.card.flat{padding:0;overflow:hidden}
+.sub{color:var(--mut);font-size:14px}
+.mut{color:var(--mut)}
+.small{font-size:13px}
+.row{display:flex;align-items:center;gap:10px}
+.sp{flex:1}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{appearance:none;border:1px solid var(--line);background:var(--s3);color:var(--tx);border-radius:14px;min-height:52px;padding:0 16px;font-weight:700;font-size:16px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-align:center}
+.btn:active{transform:scale(.98);filter:brightness(1.15)}
+.btn.primary{background:var(--acc);color:var(--acc-tx);border-color:var(--acc)}
+.btn.ghost{background:transparent}
+.btn.danger{background:#2a0d0d;border-color:#5b1a1a;color:#ff9a9a}
+.btn.sm{min-height:44px;padding:0 12px;font-size:14px;border-radius:12px}
+.btn.block{display:flex;width:100%}
+.btn[disabled]{opacity:.45;pointer-events:none}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--s2);border:1px solid var(--line);border-radius:12px;min-height:52px;padding:0 12px;width:100%;outline:none}
+textarea{padding:10px 12px;min-height:76px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+input[type=number]{-moz-appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+label.f{display:block;font-size:13px;color:var(--mut);margin:0 0 4px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;min-width:58px;min-height:54px;border-radius:14px;border:1px solid var(--line);background:var(--s1);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;line-height:1.1;cursor:pointer}
+.chip small{font-weight:600;color:var(--mut);font-size:11px}
+.chip.on{background:var(--acc);border-color:var(--acc);color:var(--acc-tx)}
+.chip.on small{color:#2b3a00}
+.chip.done::after{content:"✓";font-size:12px;color:var(--ok)}
+.chip.on.done::after{color:var(--acc-tx)}
+.tag{display:inline-flex;align-items:center;gap:4px;border-radius:999px;border:1px solid var(--line);background:var(--s2);padding:3px 10px;font-size:12.5px;color:var(--mut);margin:0 6px 6px 0}
+.tag.up{color:#0b1100;background:var(--acc);border-color:var(--acc);font-weight:800}
+.bar{height:8px;border-radius:99px;background:var(--s3);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .25s}
+.bar.ok>i{background:var(--ok)}
+.exh{all:unset;box-sizing:border-box;width:100%;display:flex;align-items:center;gap:12px;padding:12px;cursor:pointer;min-height:76px}
+.thumb{width:56px;height:56px;border-radius:12px;background:#fff;object-fit:cover;flex:0 0 auto}
+.exn{font-weight:800;font-size:16px;line-height:1.2}
+.exs{color:var(--mut);font-size:13px;margin-top:2px}
+.prog{font-weight:800;font-size:15px;min-width:44px;text-align:right;color:var(--mut)}
+.prog.full{color:var(--ok)}
+.exb{padding:0 12px 14px;border-top:1px solid var(--line)}
+.media{display:flex;gap:12px;align-items:center;padding:12px 0}
+.mwrap{width:180px;height:180px;border-radius:14px;overflow:hidden;background:#fff;flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:#444;font-size:13px;text-align:center}
+.mwrap img{width:100%;height:100%;object-fit:cover;display:block}
+.mside{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1}
+.note{border-left:3px solid var(--warn);background:#1c1805;color:#f4e08a;border-radius:8px;padding:8px 10px;font-size:13.5px;margin:0 0 10px}
+.set{border:1px solid var(--line);background:var(--s2);border-radius:14px;padding:10px;margin:0 0 8px}
+.set.logged{background:#0b1a0f;border-color:#1b4a2a}
+.seth{display:flex;align-items:center;gap:8px;margin:0 0 8px;font-size:14px}
+.seth b{font-size:15px}
+.prev{color:var(--mut);font-size:13px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.setin{display:flex;gap:8px;align-items:stretch}
+.stepper{display:flex;align-items:stretch;flex:1.55;min-width:0}
+.stepper button{all:unset;box-sizing:border-box;width:46px;flex:0 0 46px;min-height:52px;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;background:var(--s3);border:1px solid var(--line);cursor:pointer;user-select:none}
+.stepper button:first-child{border-radius:12px 0 0 12px;border-right:0}
+.stepper button:last-child{border-radius:0 12px 12px 0;border-left:0}
+.stepper input{border-radius:0;text-align:center;font-size:20px;font-weight:800;padding:0 2px;min-width:0}
+.setin .reps{flex:1;min-width:0;text-align:center;font-size:20px;font-weight:800;padding:0 4px}
+.setin .fin{flex:1.1;min-width:84px;padding:0 8px}
+.setin.two .reps{flex:.8}
+.sidelab{font-size:11px;color:var(--mut);text-align:center;display:block;margin-top:2px}
+.badge{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:8px 14px;font-weight:800;font-size:15px}
+.badge.ok{background:#0d2a17;color:#6df09a;border:1px solid #1d5a33}
+.badge.warn{background:#2b2606;color:#ffe066;border:1px solid #5c5112}
+.badge.bad{background:#2d0d0d;color:#ff8a8a;border:1px solid #6b1d1d}
+.badge.none{background:var(--s2);color:var(--mut);border:1px solid var(--line)}
+.big{font-size:30px;font-weight:800;line-height:1.1}
+details{border-top:1px solid var(--line);margin-top:6px;padding-top:8px}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700;list-style:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";margin-right:8px;color:var(--acc)}
+details[open] summary::before{content:"▾"}
+ol.steps{margin:4px 0 6px 0;padding-left:22px;color:#dcdce2}
+ol.steps li{margin:0 0 7px}
+.meal{display:flex;gap:12px;align-items:center;padding:12px;cursor:pointer;min-height:72px}
+.chk{width:44px;height:44px;border-radius:12px;border:2px solid var(--mut);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:900;color:transparent;flex:0 0 44px}
+.on>.chk,.chk.on{background:var(--acc);border-color:var(--acc);color:var(--acc-tx)}
+.ing{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:4px}
+.ing td{padding:6px 0;border-top:1px solid var(--line);vertical-align:top}
+.ing td:last-child{text-align:right;font-weight:700;white-space:nowrap;padding-left:10px}
+.ing em{display:block;font-style:normal;color:var(--mut);font-size:12px}
+.glasses{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:10px 0}
+.glasses i{height:22px;border-radius:5px;background:var(--s3)}
+.glasses i.on{background:#38bdf8}
+.tgl{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--line);min-height:60px}
+.sw{width:54px;height:32px;border-radius:99px;background:var(--s3);border:1px solid var(--line);position:relative;flex:0 0 54px;cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--mut);transition:.15s}
+.sw.on{background:var(--acc);border-color:var(--acc)}
+.sw.on::after{left:25px;background:var(--acc-tx)}
+table.t{width:100%;border-collapse:collapse;font-size:14.5px}
+table.t td,table.t th{padding:8px 4px;border-top:1px solid var(--line);text-align:left}
+table.t th{color:var(--mut);font-weight:600;font-size:12px;border-top:0}
+table.t td:last-child,table.t th:last-child{text-align:right}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(8,8,10,.97);border-top:1px solid var(--line);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.nav button{all:unset;box-sizing:border-box;flex:1;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12px;font-weight:700;color:var(--mut);cursor:pointer;border-radius:12px}
+.nav button span{font-size:22px;line-height:1}
+.nav button.on{color:var(--acc)}
+.rest{position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:40;background:#10150a;border:2px solid var(--acc);border-radius:18px;padding:10px 12px;display:none;box-shadow:0 8px 30px rgba(0,0,0,.7)}
+.rest.show{display:block}
+.rest .rt{font-size:32px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1}
+.rest .row{gap:8px}
+.rest .row>div:first-child{flex:1;min-width:0}
+body.resting{padding-bottom:calc(176px + env(safe-area-inset-bottom))}
+.rest .rl{font-size:12px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rest.fin{background:var(--acc);color:var(--acc-tx)}
+.rest.fin .rl{color:#2b3a00}
+.rest .btn{min-height:48px;padding:0 10px;font-size:14px;flex:0 0 auto;min-width:54px}
+.rest .bar{margin-top:8px;background:#26301a}
+.ov{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.78);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--s1);border:1px solid var(--line);border-radius:22px 22px 0 0;width:100%;max-width:640px;max-height:92vh;overflow:auto;padding:16px 16px calc(18px + env(safe-area-inset-bottom))}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom));z-index:70;background:#f6f6f8;color:#111;padding:12px 16px;border-radius:12px;font-weight:700;max-width:90vw;text-align:center;display:none}
+.toast.show{display:block}
+.empty{color:var(--mut);text-align:center;padding:18px 8px}
+.foot{color:#6f6f7a;font-size:12px;text-align:center;padding:10px 0 4px}
+.foot a{color:#8f8fa0}
+@media (max-width:380px){.mwrap{width:150px;height:150px}.stepper button{width:40px;flex-basis:40px}}
+@media (max-width:340px){.media{flex-direction:column;align-items:flex-start}}
+</style>
 </head>
-<body class="p-6 md:p-12 font-sans">
-    <div class="max-w-2xl mx-auto">
-        <h1 class="text-3xl font-bold mb-2">Equipment Setup</h1>
-        <p class="text-gray-400 mb-8">Select the machines and equipment available to you. Remember to stick to machines where possible for joint stability.</p>
-        
-        <div id="equipment-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <!-- Toggles will be injected here -->
-        </div>
+<body>
+<div class="top"><div class="in"><div class="brand">GYM <b>COMPANION</b></div><div class="datep" id="datep"></div></div></div>
+<main class="wrap" id="view" aria-live="polite"></main>
+<div class="rest" id="rest" role="timer">
+  <div class="row"><div><div class="rl" id="rlabel">Rest</div><div class="rt" id="rtime">0:00</div></div>
+  <button class="btn sm" data-act="rest-adj" data-s="-15">−15s</button><button class="btn sm" data-act="rest-adj" data-s="15">+15s</button><button class="btn sm primary" data-act="rest-skip">Skip</button></div>
+  <div class="bar"><i id="rbar" style="width:100%"></i></div>
+</div>
+<nav class="nav" id="nav">
+  <button data-tab="workout"><span>🏋️</span>Workout</button>
+  <button data-tab="weight"><span>⚖️</span>Weight</button>
+  <button data-tab="food"><span>🍽️</span>Food</button>
+  <button data-tab="data"><span>⚙️</span>Data</button>
+</nav>
+<div class="toast" id="toast"></div>
+<div id="modal"></div>
+<script>
+(()=>{
+'use strict';
+const MEDIA='https://gym-media.zazdelivery.com/';
+const VERSION='1.0.0';
+const ROUTINE=[{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":1,"id":"0577","name":"lever chest press","equipment":"leverage machine","target":"pectorals","secondary_muscles":["triceps","shoulders"],"sets":4,"reps":"8-10","rpe":8,"rest_seconds":120},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":2,"id":"1299","name":"lever incline chest press","equipment":"leverage machine","target":"pectorals","secondary_muscles":["shoulders","triceps"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":3,"id":"0603","name":"lever shoulder press","equipment":"leverage machine","target":"delts","secondary_muscles":["triceps","chest"],"sets":3,"reps":"8-10","rpe":8,"rest_seconds":120},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":4,"id":"0584","name":"lever lateral raise","equipment":"leverage machine","target":"delts","secondary_muscles":["traps","upper back"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":5,"id":"0596","name":"lever seated fly","equipment":"leverage machine","target":"pectorals","secondary_muscles":["deltoids","trapezius"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":6,"id":"0241","name":"cable triceps pushdown (v-bar)","equipment":"cable","target":"triceps","secondary_muscles":["forearms"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":60},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":7,"id":"0194","name":"cable overhead triceps extension (rope attachment)","equipment":"cable","target":"triceps","secondary_muscles":["shoulders"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":8,"id":"0212","name":"cable seated crunch","equipment":"cable","target":"abs","secondary_muscles":["obliques"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":1,"day_name":"Push A – Chest / Shoulders / Triceps","order":9,"id":"2138","name":"stationary bike run v. 3","equipment":"stationary bike","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":1,"reps":"10 min easy","rpe":5,"rest_seconds":0},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":1,"id":"0017","name":"assisted pull-up","equipment":"leverage machine","target":"lats","secondary_muscles":["biceps","forearms"],"sets":4,"reps":"6-10","rpe":8,"rest_seconds":120,"note":"The weight here is the machine's assistance. More assistance = easier, so progress by lowering it.","wlabel":"Assist kg"},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":2,"id":"1350","name":"lever seated row","equipment":"leverage machine","target":"upper back","secondary_muscles":["biceps","forearms"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":3,"id":"0581","name":"lever high row","equipment":"leverage machine","target":"upper back","secondary_muscles":["biceps","rear deltoids"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":4,"id":"0237","name":"cable straight arm pulldown (with rope)","equipment":"cable","target":"lats","secondary_muscles":["biceps","forearms"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":5,"id":"0602","name":"lever seated reverse fly","equipment":"leverage machine","target":"delts","secondary_muscles":["trapezius","rhomboids"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":6,"id":"0592","name":"lever preacher curl","equipment":"leverage machine","target":"biceps","secondary_muscles":["forearms"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":60},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":7,"id":"0313","name":"dumbbell hammer curl","equipment":"dumbbell","target":"biceps","secondary_muscles":["forearms"],"sets":3,"reps":"10-12","rpe":9,"rest_seconds":60},{"day":2,"day_name":"Pull A – Lats / Upper Back / Biceps","order":8,"id":"2138","name":"stationary bike run v. 3","equipment":"stationary bike","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":1,"reps":"10 min easy","rpe":5,"rest_seconds":0},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":1,"id":"2611","name":"lever horizontal one leg press","equipment":"leverage machine","target":"glutes","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":4,"reps":"10-12","rpe":8,"rest_seconds":120},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":2,"id":"2287","name":"lever alternate leg press","equipment":"leverage machine","target":"quads","secondary_muscles":["hamstrings","glutes"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":90},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":3,"id":"0585","name":"lever leg extension","equipment":"leverage machine","target":"quads","secondary_muscles":["hamstrings"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":75},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":4,"id":"0599","name":"lever seated leg curl","equipment":"leverage machine","target":"hamstrings","secondary_muscles":["calves"],"sets":4,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":5,"id":"2286","name":"lever hip extension v. 2","equipment":"leverage machine","target":"glutes","secondary_muscles":["hamstrings"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":90},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":6,"id":"0594","name":"lever seated calf raise","equipment":"leverage machine","target":"calves","secondary_muscles":["soleus","ankle stabilizers"],"sets":4,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":7,"id":"0597","name":"lever seated hip abduction","equipment":"leverage machine","target":"abductors","secondary_muscles":["glutes","hamstrings"],"sets":3,"reps":"15","rpe":8,"rest_seconds":60},{"day":3,"day_name":"Legs A – Quads / Glutes / Hamstrings (sciatica-safe)","order":8,"id":"2138","name":"stationary bike run v. 3","equipment":"stationary bike","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":1,"reps":"10 min easy","rpe":5,"rest_seconds":0},{"day":4,"day_name":"Upper B – Strength Bias","order":1,"id":"0748","name":"smith bench press","equipment":"smith machine","target":"pectorals","secondary_muscles":["triceps","shoulders"],"sets":4,"reps":"6-8","rpe":8,"rest_seconds":150},{"day":4,"day_name":"Upper B – Strength Bias","order":2,"id":"1313","name":"lever unilateral row","equipment":"leverage machine","target":"upper back","secondary_muscles":["biceps","forearms"],"sets":3,"reps":"8-10 / side","rpe":8,"rest_seconds":90},{"day":4,"day_name":"Upper B – Strength Bias","order":3,"id":"0765","name":"smith seated shoulder press","equipment":"smith machine","target":"delts","secondary_muscles":["triceps","upper back"],"sets":3,"reps":"8-10","rpe":8,"rest_seconds":120},{"day":4,"day_name":"Upper B – Strength Bias","order":4,"id":"0178","name":"cable lateral raise","equipment":"cable","target":"delts","secondary_muscles":["traps","triceps"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":4,"day_name":"Upper B – Strength Bias","order":5,"id":"0607","name":"lever triceps extension","equipment":"leverage machine","target":"triceps","secondary_muscles":["shoulders"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":60},{"day":4,"day_name":"Upper B – Strength Bias","order":6,"id":"1641","name":"cable seated curl","equipment":"cable","target":"biceps","secondary_muscles":["forearms"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":60},{"day":4,"day_name":"Upper B – Strength Bias","order":7,"id":"custom-skelcore-lateral","name":"standing lateral raise (pin-load machine)","equipment":"pin-load machine","target":"delts","secondary_muscles":["traps"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60,"note":"Replaces the cable rear-delt row (its hip-hinge cue conflicts with your plan). The animation shown is the closest dataset move (seated lever lateral raise)."},{"day":4,"day_name":"Upper B – Strength Bias","order":8,"id":"2138","name":"stationary bike run v. 3","equipment":"stationary bike","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":1,"reps":"10 min easy","rpe":5,"rest_seconds":0},{"day":5,"day_name":"Legs B + Core","order":1,"id":"2611","name":"lever horizontal one leg press","equipment":"leverage machine","target":"glutes","secondary_muscles":["quadriceps","hamstrings","calves"],"sets":3,"reps":"15","rpe":7,"rest_seconds":90},{"day":5,"day_name":"Legs B + Core","order":2,"id":"0586","name":"lever lying leg curl","equipment":"leverage machine","target":"hamstrings","secondary_muscles":["calves"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":5,"day_name":"Legs B + Core","order":3,"id":"0585","name":"lever leg extension","equipment":"leverage machine","target":"quads","secondary_muscles":["hamstrings"],"sets":3,"reps":"15","rpe":9,"rest_seconds":60},{"day":5,"day_name":"Legs B + Core","order":4,"id":"0228","name":"cable standing hip extension","equipment":"cable","target":"glutes","secondary_muscles":["hamstrings","quadriceps"],"sets":3,"reps":"12-15 / leg","rpe":8,"rest_seconds":60},{"day":5,"day_name":"Legs B + Core","order":5,"id":"0598","name":"lever seated hip adduction","equipment":"leverage machine","target":"adductors","secondary_muscles":["hamstrings","glutes"],"sets":3,"reps":"15","rpe":8,"rest_seconds":60},{"day":5,"day_name":"Legs B + Core","order":6,"id":"1385","name":"lever seated squat calf raise on leg press machine","equipment":"leverage machine","target":"calves","secondary_muscles":["quadriceps","hamstrings","glutes"],"sets":4,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":5,"day_name":"Legs B + Core","order":7,"id":"0600","name":"lever seated leg raise crunch","equipment":"leverage machine","target":"abs","secondary_muscles":["hip flexors"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":5,"day_name":"Legs B + Core","order":8,"id":"0175","name":"cable kneeling crunch","equipment":"cable","target":"abs","secondary_muscles":["obliques"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":1,"id":"2330","name":"cable lat pulldown full range of motion","equipment":"cable","target":"lats","secondary_muscles":["biceps","rhomboids","rear deltoids"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90,"note":"Form note: the dataset cue says \"slight arch in your lower back\". Keep a neutral spine instead (sciatica-safe plan)."},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":2,"id":"0861","name":"cable seated row","equipment":"cable","target":"upper back","secondary_muscles":["biceps","forearms"],"sets":3,"reps":"10-12","rpe":8,"rest_seconds":90},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":3,"id":"0227","name":"cable standing fly","equipment":"cable","target":"pectorals","secondary_muscles":["deltoids","triceps"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":4,"id":"0215","name":"cable seated rear lateral raise","equipment":"cable","target":"delts","secondary_muscles":["traps","rhomboids"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":5,"id":"0200","name":"cable pushdown (with rope attachment)","equipment":"cable","target":"triceps","secondary_muscles":["forearms"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":6,"id":"0868","name":"cable curl","equipment":"cable","target":"biceps","secondary_muscles":["forearms"],"sets":3,"reps":"12-15","rpe":9,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":7,"id":"0220","name":"cable shrug","equipment":"cable","target":"traps","secondary_muscles":["shoulders"],"sets":3,"reps":"12-15","rpe":8,"rest_seconds":60},{"day":6,"day_name":"Upper C – Pump / Delts / Arms + Stepmill","order":8,"id":"2311","name":"walking on stepmill","equipment":"stepmill machine","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","glutes","calves"],"sets":1,"reps":"15 min moderate","rpe":6,"rest_seconds":0},{"day":7,"day_name":"Active Recovery – Zone 2 Cardio + Core + Light Stretch","order":1,"id":"2141","name":"walk elliptical cross trainer","equipment":"elliptical machine","target":"cardiovascular system","secondary_muscles":["quadriceps","hamstrings","glutes","calves"],"sets":1,"reps":"35 min zone 2","rpe":5,"rest_seconds":0},{"day":7,"day_name":"Active Recovery – Zone 2 Cardio + Core + Light Stretch","order":2,"id":"0276","name":"dead bug","equipment":"body weight","target":"abs","secondary_muscles":["hip flexors","lower back"],"sets":3,"reps":"10 / side","rpe":6,"rest_seconds":45},{"day":7,"day_name":"Active Recovery – Zone 2 Cardio + Core + Light Stretch","order":3,"id":"3544","name":"bodyweight incline side plank","equipment":"body weight","target":"abs","secondary_muscles":["obliques","shoulders"],"sets":2,"reps":"30 sec / side","rpe":6,"rest_seconds":45},{"day":7,"day_name":"Active Recovery – Zone 2 Cardio + Core + Light Stretch","order":4,"id":"0874","name":"cable standing crunch (with rope attachment)","equipment":"cable","target":"abs","secondary_muscles":["obliques"],"sets":3,"reps":"15","rpe":7,"rest_seconds":45}];
+const EX={"0577":{"n":"lever chest press","eq":"leverage machine","img":"images/0577-T0yTjgW.jpg","gif":"videos/0577-T0yTjgW.gif","steps":["Adjust the seat height and position yourself on the machine with your back flat against the pad.","Grasp the handles with an overhand grip and position your elbows at a 90-degree angle.","Push the handles forward until your arms are fully extended, exhaling during the movement.","Pause briefly at the end of the movement, then slowly return to the starting position, inhaling as you do so.","Repeat for the desired number of repetitions."]},"1299":{"n":"lever incline chest press","eq":"leverage machine","img":"images/1299-jHAnWmT.jpg","gif":"videos/1299-jHAnWmT.gif","steps":["Adjust the seat and backrest of the leverage machine to a comfortable position.","Sit on the machine with your back against the backrest and your feet flat on the floor.","Grasp the handles with an overhand grip and position your hands slightly wider than shoulder-width apart.","Push the handles forward and away from your body until your arms are fully extended.","Pause for a moment, then slowly bend your elbows and lower the handles back towards your chest.","Repeat for the desired number of repetitions."]},"0603":{"n":"lever shoulder press","eq":"leverage machine","img":"images/0603-67n3r98.jpg","gif":"videos/0603-67n3r98.gif","steps":["Adjust the seat height and position yourself on the machine with your back against the backrest.","Grasp the handles with an overhand grip and position your hands at shoulder level.","Push the handles upward until your arms are fully extended, but do not lock your elbows.","Pause for a moment at the top, then slowly lower the handles back down to the starting position.","Repeat for the desired number of repetitions."]},"0584":{"n":"lever lateral raise","eq":"leverage machine","img":"images/0584-dRTfGZT.jpg","gif":"videos/0584-dRTfGZT.gif","steps":["Adjust the seat height and position yourself on the machine with your back against the pad.","Grasp the handles with an overhand grip and keep your arms straight.","Exhale and raise your arms out to the sides until they are parallel to the floor.","Pause for a moment at the top, then inhale and slowly lower your arms back to the starting position.","Repeat for the desired number of repetitions."]},"0596":{"n":"lever seated fly","eq":"leverage machine","img":"images/0596-v3xmPAR.jpg","gif":"videos/0596-v3xmPAR.gif","steps":["Adjust the seat height and position yourself on the machine with your back against the pad.","Grasp the handles with a pronated grip and keep your elbows slightly bent.","Exhale and push the handles forward, bringing them together in front of your chest.","Pause for a moment, squeezing your chest muscles.","Inhale and slowly return to the starting position, allowing your chest muscles to stretch.","Repeat for the desired number of repetitions."]},"0241":{"n":"cable triceps pushdown (v-bar)","eq":"cable","img":"images/0241-gAwDzB3.jpg","gif":"videos/0241-gAwDzB3.gif","steps":["Attach a v-bar attachment to the cable machine at the highest setting.","Stand facing the cable machine with your feet shoulder-width apart.","Grasp the v-bar with an overhand grip, palms facing down, and your hands shoulder-width apart.","Keep your elbows close to your sides and your upper arms stationary throughout the exercise.","Engage your triceps and exhale as you push the v-bar down until your arms are fully extended.","Pause for a moment at the bottom of the movement, squeezing your triceps.","Inhale as you slowly return the v-bar to the starting position, maintaining control.","Repeat for the desired number of repetitions."]},"0194":{"n":"cable overhead triceps extension (rope attachment)","eq":"cable","img":"images/0194-2IxROQ1.jpg","gif":"videos/0194-2IxROQ1.gif","steps":["Attach a rope to a cable machine at a high position.","Stand facing away from the machine with your feet shoulder-width apart.","Grasp the rope with both hands, palms facing each other, and bring your hands above your head.","Keep your upper arms close to your head and your elbows pointing forward.","Slowly lower the rope behind your head by bending your elbows.","Pause for a moment, then extend your arms back up to the starting position.","Repeat for the desired number of repetitions."]},"0212":{"n":"cable seated crunch","eq":"cable","img":"images/0212-8xUv4J7.jpg","gif":"videos/0212-8xUv4J7.gif","steps":["Sit on a cable machine with your feet flat on the ground and your knees bent.","Hold the cable handle with both hands and position it behind your head.","Engage your abs and slowly curl your upper body forward, bringing your chest towards your knees.","Pause for a moment at the top, then slowly return to the starting position.","Repeat for the desired number of repetitions."]},"2138":{"n":"stationary bike run v. 3","eq":"stationary bike","img":"images/2138-H1PESYI.jpg","gif":"videos/2138-H1PESYI.gif","steps":["Adjust the seat height and position to ensure proper alignment.","Place your feet on the pedals and secure them with the straps if available.","Start pedaling at a comfortable pace.","Maintain a steady rhythm and increase the resistance as desired.","Engage your core muscles to maintain stability and proper posture.","Continue pedaling for the desired duration of your workout.","Gradually decrease the resistance and slow down before coming to a complete stop.","Stretch your legs and cool down after the workout."]},"0017":{"n":"assisted pull-up","eq":"leverage machine","img":"images/0017-kiJ4Z2K.jpg","gif":"videos/0017-kiJ4Z2K.gif","steps":["Adjust the machine to your desired weight and height settings.","Grasp the handles with an overhand grip, slightly wider than shoulder-width apart.","Hang with your arms fully extended and your feet off the ground.","Engage your back muscles and pull your body up towards the handles, keeping your elbows close to your body.","Continue pulling until your chin is above the handles.","Pause for a moment at the top, then slowly lower your body back down to the starting position.","Repeat for the desired number of repetitions."]},"1350":{"n":"lever seated row","eq":"leverage machine","img":"images/1350-7I6LNUG.jpg","gif":"videos/1350-7I6LNUG.gif","steps":["Adjust the seat height and footrests to a comfortable position.","Sit on the machine with your chest against the pad and your feet on the footrests.","Grasp the handles with an overhand grip, shoulder-width apart.","Keep your back straight and your core engaged.","Pull the handles towards your body, squeezing your shoulder blades together.","Pause for a moment at the peak of the movement.","Slowly release the handles and return to the starting position.","Repeat for the desired number of repetitions."]},"0581":{"n":"lever high row","eq":"leverage machine","img":"images/0581-nZZZy9m.jpg","gif":"videos/0581-nZZZy9m.gif","steps":["Adjust the seat height and foot platform to a comfortable position.","Sit on the machine with your chest against the pad and your feet flat on the foot platform.","Grasp the handles with an overhand grip, slightly wider than shoulder-width apart.","Keep your back straight and engage your core.","Pull the handles towards your body, squeezing your shoulder blades together.","Pause for a moment at the peak of the movement, then slowly release the handles back to the starting position.","Repeat for the desired number of repetitions."]},"0237":{"n":"cable straight arm pulldown (with rope)","eq":"cable","img":"images/0237-DT14T9T.jpg","gif":"videos/0237-DT14T9T.gif","steps":["Attach a rope to the cable machine at the highest setting.","Stand facing the machine with your feet shoulder-width apart.","Grasp the rope with both hands, palms facing down.","Extend your arms fully in front of you, keeping your elbows slightly bent.","Engage your lats and slowly pull the rope down towards your thighs, keeping your arms straight.","Pause for a moment at the bottom, then slowly release the tension and return to the starting position.","Repeat for the desired number of repetitions."]},"0602":{"n":"lever seated reverse fly","eq":"leverage machine","img":"images/0602-myfUsKf.jpg","gif":"videos/0602-myfUsKf.gif","steps":["Adjust the seat height and position yourself on the machine with your chest against the pad and your feet flat on the floor.","Grasp the handles with an overhand grip and keep your arms slightly bent.","Exhale and squeeze your shoulder blades together as you pull the handles back and outward, away from your body.","Pause for a moment at the peak contraction, then inhale and slowly return to the starting position.","Repeat for the desired number of repetitions."]},"0592":{"n":"lever preacher curl","eq":"leverage machine","img":"images/0592-b6hQYMb.jpg","gif":"videos/0592-b6hQYMb.gif","steps":["Adjust the seat height and position yourself on the leverage machine.","Place your upper arms on the pad and grip the handles with an underhand grip.","Keep your back straight and your elbows positioned on the pad.","Exhale and curl your forearms towards your upper arms, contracting your biceps.","Pause for a moment at the top of the movement, squeezing your biceps.","Inhale and slowly lower the handles back to the starting position.","Repeat for the desired number of repetitions."]},"0313":{"n":"dumbbell hammer curl","eq":"dumbbell","img":"images/0313-slDvUAU.jpg","gif":"videos/0313-slDvUAU.gif","steps":["Stand up straight with a dumbbell in each hand, palms facing your torso.","Keep your elbows close to your torso and rotate the palms of your hands until they are facing forward.","This will be your starting position.","Now, keeping the upper arms stationary, exhale and curl the weights while contracting your biceps.","Continue to raise the weights until your biceps are fully contracted and the dumbbells are at shoulder level.","Hold the contracted position for a brief pause as you squeeze your biceps.","Then, inhale and slowly begin to lower the dumbbells back to the starting position.","Repeat for the recommended amount of repetitions."]},"2611":{"n":"lever horizontal one leg press","eq":"leverage machine","img":"images/2611-9KU9TYF.jpg","gif":"videos/2611-9KU9TYF.gif","steps":["Adjust the seat of the machine so that your knees are at a 90-degree angle when your feet are on the footplate.","Sit on the machine with your back against the backrest and your feet shoulder-width apart on the footplate.","Place your hands on the handles or sides of the machine for stability.","Push the footplate away from your body by extending your leg, keeping your back against the backrest.","Pause for a moment at the fully extended position, then slowly bend your leg to return to the starting position.","Repeat for the desired number of repetitions, then switch legs."]},"2287":{"n":"lever alternate leg press","eq":"leverage machine","img":"images/2287-V07qpXy.jpg","gif":"videos/2287-V07qpXy.gif","steps":["Adjust the seat and foot platform of the leverage machine to your desired position.","Sit on the machine with your back against the backrest and your feet on the foot platform.","Place your hands on the handles or sides of the machine for stability.","Push one foot against the foot platform, extending your leg until it is almost fully straight.","Pause for a moment, then slowly bend your leg and return to the starting position.","Repeat with the other leg.","Continue alternating legs for the desired number of repetitions."]},"0585":{"n":"lever leg extension","eq":"leverage machine","img":"images/0585-my33uHU.jpg","gif":"videos/0585-my33uHU.gif","steps":["Adjust the seat height and backrest of the machine to fit your body.","Sit on the machine with your back against the backrest and your feet on the footpad.","Grasp the handles or sidebars for stability.","Extend your legs forward by straightening your knees, lifting the weight.","Pause for a moment at the top, then slowly lower the weight back to the starting position.","Repeat for the desired number of repetitions."]},"0599":{"n":"lever seated leg curl","eq":"leverage machine","img":"images/0599-Zg3XY7P.jpg","gif":"videos/0599-Zg3XY7P.gif","steps":["Adjust the machine to fit your body and sit on it with your back against the backrest.","Place your lower legs under the padded lever, just above your ankles.","Grasp the handles on the sides of the machine for support.","Keeping your upper legs stationary, exhale and curl your legs up as far as possible.","Hold the contracted position for a brief pause as you squeeze your hamstrings.","Inhale and slowly lower the lever back to the starting position.","Repeat for the desired number of repetitions."]},"2286":{"n":"lever hip extension v. 2","eq":"leverage machine","img":"images/2286-OPqShYN.jpg","gif":"videos/2286-OPqShYN.gif","steps":["Adjust the machine to fit your body and sit on it with your back against the backrest.","Place your feet on the footrests and grip the handles for stability.","Engage your glutes and hamstrings, then push against the footrests to extend your hips and raise your legs backward.","Pause for a moment at the top, then slowly lower your legs back to the starting position.","Repeat for the desired number of repetitions."]},"0594":{"n":"lever seated calf raise","eq":"leverage machine","img":"images/0594-bOOdeyc.jpg","gif":"videos/0594-bOOdeyc.gif","steps":["Adjust the seat height so that your knees are slightly bent and your feet are flat on the footplate.","Place your toes on the footplate with your heels hanging off the edge.","Grasp the handles or the sides of the seat for stability.","Push through the balls of your feet to raise your heels as high as possible.","Pause for a moment at the top, then slowly lower your heels back down to the starting position.","Repeat for the desired number of repetitions."]},"0597":{"n":"lever seated hip abduction","eq":"leverage machine","img":"images/0597-CHpahtl.jpg","gif":"videos/0597-CHpahtl.gif","steps":["Adjust the seat height so that your knees are at a 90-degree angle.","Sit on the machine with your back against the backrest and your feet on the footrests.","Place your hands on the side handles for stability.","Engage your abductors and slowly push your legs apart, away from the midline of your body.","Pause for a moment at the end of the movement, then slowly bring your legs back together to the starting position.","Repeat for the desired number of repetitions."]},"0748":{"n":"smith bench press","eq":"smith machine","img":"images/0748-trqKQv2.jpg","gif":"videos/0748-trqKQv2.gif","steps":["Adjust the height of the smith machine bar to chest level.","Lie flat on the bench with your feet firmly planted on the ground.","Grip the bar with an overhand grip slightly wider than shoulder-width apart.","Unrack the bar and lower it towards your chest, keeping your elbows tucked in.","Pause for a moment when the bar touches your chest.","Push the bar back up to the starting position, fully extending your arms.","Repeat for the desired number of repetitions."]},"1313":{"n":"lever unilateral row","eq":"leverage machine","img":"images/1313-oROuvrX.jpg","gif":"videos/1313-oROuvrX.gif","steps":["Adjust the seat height and position yourself facing the machine.","Grasp the handles with an overhand grip and keep your back straight.","Pull the handles towards your body, squeezing your shoulder blades together.","Pause for a moment at the peak of the movement, then slowly release and extend your arms back to the starting position.","Repeat for the desired number of repetitions."]},"0765":{"n":"smith seated shoulder press","eq":"smith machine","img":"images/0765-xUwnBMT.jpg","gif":"videos/0765-xUwnBMT.gif","steps":["Adjust the seat height so that the handles are at shoulder level.","Sit on the machine with your back against the pad and your feet flat on the floor.","Grasp the handles with an overhand grip and lift them off the supports, extending your arms fully.","Lower the handles down to shoulder level, keeping your elbows slightly bent.","Press the handles up overhead until your arms are fully extended.","Pause for a moment at the top, then slowly lower the handles back down to shoulder level.","Repeat for the desired number of repetitions."]},"0178":{"n":"cable lateral raise","eq":"cable","img":"images/0178-goJ6ezq.jpg","gif":"videos/0178-goJ6ezq.gif","steps":["Stand with your feet shoulder-width apart and grasp the cable handles with an overhand grip.","Keep your arms straight and your core engaged.","Raise your arms out to the sides until they are parallel to the floor.","Pause for a moment at the top, then slowly lower your arms back down to the starting position.","Repeat for the desired number of repetitions."]},"0607":{"n":"lever triceps extension","eq":"leverage machine","img":"images/0607-Ser9eQp.jpg","gif":"videos/0607-Ser9eQp.gif","steps":["Adjust the seat height and position yourself on the machine with your back against the pad.","Grasp the handles with an overhand grip and fully extend your arms in front of you.","Keeping your upper arms stationary, slowly lower the handles towards your forehead by bending your elbows.","Pause for a moment at the bottom, then push the handles back up to the starting position by extending your arms.","Repeat for the desired number of repetitions."]},"1641":{"n":"cable seated curl","eq":"cable","img":"images/1641-8oYqOt9.jpg","gif":"videos/1641-8oYqOt9.gif","steps":["Sit on a cable machine with your feet flat on the ground and your back straight.","Grasp the cable attachment with an underhand grip, palms facing up, and your arms fully extended.","Keeping your upper arms stationary, exhale and curl the cable attachment towards your shoulders, contracting your biceps.","Pause for a moment at the top of the movement, squeezing your biceps.","Inhale and slowly lower the cable attachment back to the starting position, fully extending your arms.","Repeat for the desired number of repetitions."]},"custom-skelcore-lateral":{"n":"standing lateral raise (pin-load machine)","eq":"pin-load machine","img":"images/0584-dRTfGZT.jpg","gif":"videos/0584-dRTfGZT.gif","steps":["Set the weight pin to a light load and adjust the pads so the machine's pivot lines up with your shoulders.","Stand tall against the support with your chest up, core braced and a soft bend in your knees.","Place your arms against the pads and keep your shoulders down and back.","Raise your arms out to the sides along the guided arc until they are about shoulder height, leading with the elbows.","Pause briefly at the top without shrugging toward your ears.","Lower slowly under control, keeping tension on the side delts until the start position.","Repeat for the prescribed reps, stopping a set if you have to swing your torso to finish it."]},"0586":{"n":"lever lying leg curl","eq":"leverage machine","img":"images/0586-17lJ1kr.jpg","gif":"videos/0586-17lJ1kr.gif","steps":["Adjust the machine to fit your body and select the desired weight.","Lie face down on the machine with your legs straight and your heels against the padded lever.","Grasp the handles or the sides of the machine for stability.","Keeping your upper body stationary, exhale and curl your legs up as far as possible without lifting your hips off the pad.","Hold the contracted position for a brief pause as you squeeze your hamstrings.","Inhale and slowly lower the lever back to the starting position.","Repeat for the desired number of repetitions."]},"0228":{"n":"cable standing hip extension","eq":"cable","img":"images/0228-Kpajagk.jpg","gif":"videos/0228-Kpajagk.gif","steps":["Attach a cable to a low pulley and stand facing away from the machine.","Place the cable around your ankle and stand with your feet shoulder-width apart.","Keep your core engaged and your back straight throughout the exercise.","Slowly extend your leg straight back, squeezing your glutes at the top of the movement.","Pause for a moment, then return to the starting position.","Repeat for the desired number of repetitions.","Switch sides and repeat with the other leg."]},"0598":{"n":"lever seated hip adduction","eq":"leverage machine","img":"images/0598-oHsrypV.jpg","gif":"videos/0598-oHsrypV.gif","steps":["Adjust the seat height and position yourself on the machine with your back against the backrest.","Place your feet on the footrests and grasp the handles for stability.","Engage your adductor muscles and slowly bring your legs together, squeezing your inner thighs.","Pause for a moment at the peak contraction, then slowly return to the starting position.","Repeat for the desired number of repetitions."]},"1385":{"n":"lever seated squat calf raise on leg press machine","eq":"leverage machine","img":"images/1385-IeDEXTe.jpg","gif":"videos/1385-IeDEXTe.gif","steps":["Adjust the seat of the leg press machine so that your knees are slightly bent when your feet are on the footplate.","Sit on the machine with your back against the backrest and your feet flat on the footplate, shoulder-width apart.","Place your toes and the balls of your feet on the footplate, keeping your heels off the edge.","Release the safety handles and push the footplate away from you by extending your knees.","Once your knees are fully extended, slowly lower your heels by flexing your calves.","Pause for a moment at the bottom, then push the footplate back up by extending your calves.","Repeat for the desired number of repetitions."]},"0600":{"n":"lever seated leg raise crunch","eq":"leverage machine","img":"images/0600-PQ2AtC3.jpg","gif":"videos/0600-PQ2AtC3.gif","steps":["Sit on the leverage machine with your back against the backrest and your feet on the footrests.","Grasp the handles or sidebars for stability.","Engage your abs and slowly raise your legs up towards your chest, curling your torso forward at the same time.","Pause for a moment at the top, then slowly lower your legs and torso back to the starting position.","Repeat for the desired number of repetitions."]},"0175":{"n":"cable kneeling crunch","eq":"cable","img":"images/0175-WW95auq.jpg","gif":"videos/0175-WW95auq.gif","steps":["Attach a rope handle to a high pulley and kneel down facing away from the machine.","Hold the rope handle with both hands and place it behind your head, keeping your elbows out to the sides.","Keeping your hips stationary, flex your waist and crunch your torso down towards your thighs.","Pause for a moment at the bottom, then slowly return to the starting position.","Repeat for the desired number of repetitions."]},"2330":{"n":"cable lat pulldown full range of motion","eq":"cable","img":"images/2330-LEprlgG.jpg","gif":"videos/2330-LEprlgG.gif","steps":["Sit on the lat pulldown machine with your knees positioned under the pads.","Grasp the cable bar with an overhand grip, slightly wider than shoulder-width apart.","Lean back slightly and keep your chest up, maintaining a slight arch in your lower back.","Pull the bar down towards your upper chest, squeezing your shoulder blades together.","Pause for a moment at the bottom of the movement, then slowly release the bar back to the starting position.","Repeat for the desired number of repetitions."]},"0861":{"n":"cable seated row","eq":"cable","img":"images/0861-fUBheHs.jpg","gif":"videos/0861-fUBheHs.gif","steps":["Sit on the cable row machine with your feet flat on the footrests and your knees slightly bent.","Grasp the handles with an overhand grip, keeping your back straight and your shoulders relaxed.","Pull the handles towards your body, squeezing your shoulder blades together.","Pause for a moment at the peak of the movement, then slowly release the handles back to the starting position.","Repeat for the desired number of repetitions."]},"0227":{"n":"cable standing fly","eq":"cable","img":"images/0227-Pr9Rhf4.jpg","gif":"videos/0227-Pr9Rhf4.gif","steps":["Attach the handles to the cables at chest height.","Stand with your feet shoulder-width apart, facing away from the cable machine.","Grasp the handles with an overhand grip, palms facing forward.","Step forward slightly to create tension in the cables.","Keep your core engaged and your back straight throughout the exercise.","With a slight bend in your elbows, slowly bring your arms forward and together in front of your chest.","Squeeze your chest muscles at the peak of the movement.","Slowly reverse the movement, returning your arms to the starting position.","Repeat for the desired number of repetitions."]},"0215":{"n":"cable seated rear lateral raise","eq":"cable","img":"images/0215-x825CZm.jpg","gif":"videos/0215-x825CZm.gif","steps":["Sit on a bench facing the cable machine with your feet flat on the ground.","Grasp the cable handles with an overhand grip and extend your arms straight in front of you.","Keeping your arms straight, slowly raise them out to the sides until they are parallel to the floor.","Pause for a moment at the top, then slowly lower your arms back to the starting position.","Repeat for the desired number of repetitions."]},"0200":{"n":"cable pushdown (with rope attachment)","eq":"cable","img":"images/0200-dU605di.jpg","gif":"videos/0200-dU605di.gif","steps":["Attach a rope attachment to a high pulley on a cable machine.","Stand facing the machine with your feet shoulder-width apart and a slight bend in your knees.","Grasp the rope with an overhand grip, palms facing each other.","Keep your elbows close to your sides and your upper arms stationary throughout the exercise.","Exhale and push the rope downward by extending your elbows until your arms are fully extended.","Pause for a moment, then inhale and slowly return to the starting position by allowing your elbows to flex.","Repeat for the desired number of repetitions."]},"0868":{"n":"cable curl","eq":"cable","img":"images/0868-G08RZcQ.jpg","gif":"videos/0868-G08RZcQ.gif","steps":["Stand facing the cable machine with your feet shoulder-width apart.","Grasp the cable attachment with an underhand grip, palms facing up.","Keep your elbows close to your sides and your upper arms stationary.","Exhale and curl the cable attachment towards your shoulders, contracting your biceps.","Pause for a moment at the top of the movement, squeezing your biceps.","Inhale and slowly lower the cable attachment back to the starting position.","Repeat for the desired number of repetitions."]},"0220":{"n":"cable shrug","eq":"cable","img":"images/0220-Eg98Ft9.jpg","gif":"videos/0220-Eg98Ft9.gif","steps":["Stand facing the cable machine with your feet shoulder-width apart.","Grasp the cable handles with an overhand grip and let your arms hang down in front of you.","Keeping your arms straight, shrug your shoulders up towards your ears.","Hold the contraction for a moment, then slowly lower your shoulders back down to the starting position.","Repeat for the desired number of repetitions."]},"2311":{"n":"walking on stepmill","eq":"stepmill machine","img":"images/2311-j9Q5crt.jpg","gif":"videos/2311-j9Q5crt.gif","steps":["Adjust the stepmill machine to a comfortable level.","Step onto the machine and place your hands on the handrails for support.","Start walking by placing one foot on a step and then the other, alternating between legs.","Maintain an upright posture and engage your core muscles.","Continue walking for the desired duration or distance.","Gradually increase the intensity or speed as you become more comfortable with the exercise.","Remember to cool down and stretch after completing the exercise."]},"2141":{"n":"walk elliptical cross trainer","eq":"elliptical machine","img":"images/2141-rjtuP6X.jpg","gif":"videos/2141-rjtuP6X.gif","steps":["Adjust the resistance level and incline of the elliptical machine to your desired settings.","Step onto the pedals of the machine and grip the handles lightly.","Begin by pushing down with your feet and pulling the handles towards your body.","Continue this motion, alternating between pushing and pulling, to simulate a walking or running motion.","Maintain a steady pace and keep your core engaged throughout the exercise.","Continue for the desired duration of your cardio workout.","Gradually decrease the intensity and speed of the machine before stepping off."]},"0276":{"n":"dead bug","eq":"body weight","img":"images/0276-iny3m5y.jpg","gif":"videos/0276-iny3m5y.gif","steps":["Lie flat on your back with your arms extended towards the ceiling.","Bend your knees and lift your legs off the ground, creating a 90-degree angle at your hips and knees.","Engage your core and lower back to press your lower back into the ground.","Slowly lower your right arm and left leg towards the ground, keeping them straight and hovering just above the floor.","Pause for a moment, then return to the starting position.","Repeat the movement with your left arm and right leg.","Continue alternating sides for the desired number of repetitions."]},"3544":{"n":"bodyweight incline side plank","eq":"body weight","img":"images/3544-5VXmnV5.jpg","gif":"videos/3544-5VXmnV5.gif","steps":["Start by lying on your side with your legs extended and stacked on top of each other.","Place your forearm on the ground directly below your shoulder, with your elbow bent at a 90-degree angle.","Engage your core and lift your hips off the ground, creating a straight line from your head to your feet.","Hold this position for the desired amount of time.","Lower your hips back down to the ground and repeat on the other side."]},"0874":{"n":"cable standing crunch (with rope attachment)","eq":"cable","img":"images/0874-XU3ePuv.jpg","gif":"videos/0874-XU3ePuv.gif","steps":["Attach a rope to a cable machine at chest height.","Stand facing away from the machine with your feet shoulder-width apart.","Hold the rope with both hands and bring it behind your head, keeping your elbows bent.","Engage your abs and slowly crunch your torso forward, bringing your elbows towards your knees.","Pause for a moment at the top of the crunch, then slowly return to the starting position.","Repeat for the desired number of repetitions."]}};
+const TARGET={kcal:2200,protein:190,water:3000};
+const MEALS=[
+ {id:'breakfast',name:'Breakfast',time:'07:30',kcal:552,p:33,c:57,f:23,ing:[['Eggs','Huevos',150],['Spinach','Espinaca',100],['Rolled oats','Avena en hojuelas',50],['Banana','Cambur',100],['Flaxseed','Linaza',10],['Onion','Cebolla',20],['Salt','Sal',1]]},
+ {id:'lunch',name:'Lunch',time:'12:30',kcal:637,p:61,c:80,f:8,ing:[['Whole chicken','Pollo entero',380],['Rice','Arroz',45],['Lentils','Lentejas',50],['Pumpkin / squash','Auyama',100],['Carrot','Zanahoria',50],['Onion','Cebolla',30],['Garlic','Ajo',5],['Cilantro','Cilantro',10],['Salt','Sal',1.5]]},
+ {id:'post',name:'Post-workout',time:'17:30',kcal:425,p:35,c:35,f:16,ing:[['Sardines in tomato sauce','Sardinas en salsa de tomate',170],['Linguine','Pasta larga (linguini)',35],['White cabbage','Repollo blanco',100],['Salt','Sal',0.5]]},
+ {id:'dinner',name:'Dinner',time:'20:30',kcal:560,p:59,c:43,f:19,ing:[['Whole chicken','Pollo entero',370],['Split green peas','Arvejas verdes partidas',50],['Broccoli','Brócoli',100],['Pumpkin / squash','Auyama',100],['Vegetable oil','Aceite vegetal',6],['Roasted peanuts (unsalted)','Maní tostado sin sal',10],['Salt','Sal',1]]}
+];
+const SITES=['Abdomen – left','Abdomen – right','Thigh – left','Thigh – right','Upper arm – left','Upper arm – right'];
 
-        <button onclick="generatePrompt()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded">
-            Generate Claude List
-        </button>
+/* ---------- utils ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pad=n=>String(n).padStart(2,'0');
+const dkey=(d=new Date())=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+const didx=k=>{const [y,m,d]=k.split('-').map(Number);return Math.round(Date.UTC(y,m-1,d)/864e5)};
+const num=v=>{if(v==null)return null;const n=parseFloat(String(v).replace(',','.'));return Number.isFinite(n)?n:null};
+const r1=n=>Math.round(n*10)/10;
+const r2=n=>Math.round(n*100)/100;
+const title=s=>String(s).replace(/\b[a-z]/g,c=>c.toUpperCase());
+const fdate=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+const fdateL=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})};
+const fmtT=s=>`${Math.floor(s/60)}:${pad(s%60)}`;
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
 
-        <div id="result-container" class="mt-6 hidden">
-            <h2 class="text-xl font-semibold mb-2">Copy this for your prompt:</h2>
-            <textarea id="output-text" class="w-full bg-gray-800 text-green-400 p-4 rounded h-32" readonly></textarea>
-        </div>
-    </div>
+/* ---------- storage (IndexedDB, localStorage fallback) ---------- */
+let S,saveT=null,_db;
+const def=()=>({v:1,settings:{deload:false,wake:true,sound:true,vibrate:true,notifyAsked:false,remindTime:'07:00'},sessions:{},weights:[],doses:[],meals:{},water:{},notes:{},routine:null});
+const idb=()=>_db||(_db=new Promise((res,rej)=>{const r=indexedDB.open('gym-companion',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}));
+const idbGet=async k=>{const db=await idb();return new Promise((res,rej)=>{const q=db.transaction('kv','readonly').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})};
+const idbSet=async(k,v)=>{const db=await idb();return new Promise((res,rej)=>{const t=db.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=()=>res();t.onerror=()=>rej(t.error);t.onabort=()=>rej(t.error)})};
+async function load(){
+  let data;
+  try{data=await idbGet('state')}catch(e){}
+  if(!data){try{const raw=lsGet('gc.state');if(raw)data=JSON.parse(raw)}catch(e){}}
+  S=Object.assign(def(),data||{});
+  S.settings=Object.assign(def().settings,(data&&data.settings)||{});
+}
+function save(){clearTimeout(saveT);saveT=setTimeout(flush,120)}
+async function flush(){
+  clearTimeout(saveT);
+  try{await idbSet('state',S)}
+  catch(e){try{localStorage.setItem('gc.state',JSON.stringify(S))}catch(e2){toast('Storage is full — export a backup now')}}
+}
 
-    <script>
-        let availableEquipment = [];
+/* ---------- routine ---------- */
+const R=()=>S.routine&&S.routine.length?S.routine:ROUTINE;
+let _dc=null,_dr=null;
+function days(){
+  const r=R();if(_dr===r&&_dc)return _dc;
+  const m=new Map();
+  r.forEach(e=>{if(!m.has(e.day))m.set(e.day,{day:e.day,name:e.day_name,ex:[]});m.get(e.day).ex.push(e)});
+  _dc=[...m.values()].sort((a,b)=>a.day-b.day);_dc.forEach(d=>d.ex.sort((a,b)=>a.order-b.order));_dr=r;return _dc;
+}
+const dayObj=n=>days().find(d=>d.day===n)||days()[0];
+const exOf=(day,id)=>dayObj(day).ex.find(e=>e.id===id);
+const info=e=>{const i=EX[e.id]||{};return{img:e.image||i.img||'',gif:e.gif_url||i.gif||'',steps:(e.instruction_steps&&e.instruction_steps.en)||i.steps||[]}};
+const kindOf=e=>{const s=String(e.reps);if(/min/i.test(s))return'cardio';if(/sec/i.test(s))return'hold';if(/\/\s*(side|leg)/i.test(s))return'side';return'lift'};
+const topReps=s=>{const m=String(s).match(/(\d+)(?:\s*-\s*(\d+))?/);return m?+(m[2]||m[1]):0};
+const lowReps=s=>{const m=String(s).match(/(\d+)/);return m?+m[1]:0};
+const nSets=e=>kindOf(e)==='cardio'?1:(S.settings.deload?Math.min(2,e.sets):e.sets);
+const rpeOf=e=>(S.settings.deload&&kindOf(e)!=='cardio')?6:e.rpe;
+const imgUrl=p=>p?MEDIA+String(p).replace(/^\//,''):'';
+function img(path,cls,alt){
+  if(!path)return`<div class="${cls||''}" style="display:flex;align-items:center;justify-content:center;color:#555;font-size:11px">no image</div>`;
+  return`<img class="${cls||''}" src="${esc(imgUrl(path))}" alt="${esc(alt)}" width="180" height="180" loading="lazy" decoding="async" crossorigin="anonymous" data-img="1">`;
+}
 
-        // Load the local JSON file
-        fetch('exercises.json')
-            .then(response => response.json())
-            .then(data => {
-                // Extract unique equipment types
-                const equipmentSet = new Set(data.map(ex => ex.equipment));
-                availableEquipment = Array.from(equipmentSet).sort();
-                renderToggles();
-            })
-            .catch(err => console.error("Error loading exercises.json. Make sure you are running a local server.", err));
+/* ---------- sessions ---------- */
+const skey=(date,day)=>date+'|'+day;
+function sess(day,create,date=dkey()){
+  const k=skey(date,day);let s=S.sessions[k];
+  if(!s&&create)s=S.sessions[k]={date,day,sets:{},done:false};
+  return s;
+}
+const getSet=(day,id,i)=>{const s=sess(day);return(s&&s.sets[id]&&s.sets[id][i])||null};
+function putSet(day,id,i,rec){
+  const s=sess(day,true);const a=s.sets[id]||(s.sets[id]=[]);
+  while(a.length<i)a.push(null);a[i]=rec;
+}
+function prevSets(day,id){
+  const cur=skey(dkey(),day);
+  const ks=Object.keys(S.sessions).filter(k=>k!==cur&&S.sessions[k].day===day&&(S.sessions[k].sets[id]||[]).some(Boolean)).sort().reverse();
+  return ks.length?{date:S.sessions[ks[0]].date,sets:S.sessions[ks[0]].sets[id]}:null;
+}
+function progress(d){
+  let done=0,total=0;
+  d.ex.forEach(e=>{const n=nSets(e);total+=n;for(let i=0;i<n;i++)if(getSet(d.day,e.id,i))done++});
+  return{done,total};
+}
+function firstIncomplete(d){
+  for(const e of d.ex){const n=nSets(e);for(let i=0;i<n;i++)if(!getSet(d.day,e.id,i))return e.id}
+  return null;
+}
+function suggestedDay(){
+  const D=days();const max=D[D.length-1].day;const today=dkey();
+  const t=Object.values(S.sessions).filter(s=>s.date===today&&!s.done&&Object.values(s.sets).some(a=>a.some(Boolean)));
+  if(t.length)return t[0].day;
+  const ds=Object.values(S.sessions).filter(s=>s.done).sort((a,b)=>(a.date+String(a.t||0)).localeCompare(b.date+String(b.t||0)));
+  if(ds.length){const last=ds[ds.length-1].day;const nxt=D.find(d=>d.day>last);return nxt?nxt.day:D[0].day}
+  return D[0].day;
+}
+const doneRecently=day=>{const t=didx(dkey());return Object.values(S.sessions).some(s=>s.day===day&&s.done&&t-didx(s.date)<7)};
+function readyToIncrease(e,day){
+  const k=kindOf(e);if(k==='cardio'||k==='hold'||S.settings.deload)return false;
+  const p=prevSets(day,e.id);if(!p)return false;
+  const logs=p.sets.filter(Boolean);if(logs.length<e.sets)return false;
+  const top=topReps(e.reps);
+  return logs.every(l=>Math.min(l.r||0,l.r2==null?1e9:l.r2)>=top);
+}
+function weekNo(){
+  const ds=Object.values(S.sessions).map(s=>s.date).sort();if(!ds.length)return 1;
+  return Math.floor((didx(dkey())-didx(ds[0]))/7)+1;
+}
 
-        function renderToggles() {
-            const container = document.getElementById('equipment-list');
-            availableEquipment.forEach(item => {
-                const div = document.createElement('div');
-                div.className = "flex items-center p-4 bg-gray-800 rounded-lg border border-gray-700";
-                div.innerHTML = `
-                    <input type="checkbox" id="${item}" value="${item}" class="w-5 h-5 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
-                    <label for="${item}" class="ml-3 text-lg font-medium capitalize cursor-pointer w-full">${item}</label>
-                `;
-                container.appendChild(div);
-            });
-        }
+/* ---------- UI state ---------- */
+const UI={tab:lsGet('gc.tab')||'workout',day:1,open:{},gif:{},instr:{},draft:{},ing:{},snooze:0,modalOpen:false,injected:false,installEvt:null,swState:'…',cacheMsg:''};
 
-        function generatePrompt() {
-            const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            const selected = Array.from(checkboxes).map(cb => cb.value);
-            
-            const resultContainer = document.getElementById('result-container');
-            const outputText = document.getElementById('output-text');
-            
-            if(selected.length === 0) {
-                alert("Please select at least one piece of equipment.");
-                return;
-            }
+/* ---------- toast / modal ---------- */
+let toastT;
+function toast(msg,ms=2600){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),ms)}
+function openModal(html){$('#modal').innerHTML=`<div class="ov" data-act="ov-close"><div class="sheet" role="dialog" aria-modal="true">${html}</div></div>`;UI.modalOpen=true}
+function closeModal(){$('#modal').innerHTML='';UI.modalOpen=false}
 
-            outputText.value = selected.join(', ');
-            resultContainer.classList.remove('hidden');
-        }
-    </script>
+/* ---------- WORKOUT view ---------- */
+function vWorkout(){
+  const D=days();const dd=dayObj(UI.day);UI.day=dd.day;
+  const P=progress(dd);const pct=P.total?Math.round(P.done/P.total*100):0;
+  const sug=suggestedDay();
+  let h='';
+  const wk=weekNo();
+  if(wk>=5&&wk%5===0&&!S.settings.deload)h+=`<div class="note">Week ${wk}: your plan calls for a deload week (2 sets, RPE 6). Turn it on in Data → Settings.</div>`;
+  if(S.settings.deload)h+=`<div class="note">Deload week is ON — 2 sets per exercise at RPE 6.</div>`;
+  if('Notification' in window&&Notification.permission==='default'&&!S.settings.notifyAsked)
+    h+=`<div class="card"><div class="row"><div class="sp"><b>Rest-timer alerts</b><div class="sub">Get a notification (and a buzz on your watch) when rest ends.</div></div><button class="btn sm primary" data-act="notif-enable">Enable</button></div></div>`;
+  h+=`<div class="chips">${D.map(d=>`<button class="chip ${d.day===UI.day?'on':''} ${doneRecently(d.day)?'done':''}" data-act="day" data-day="${d.day}"><small>DAY</small>${d.day}</button>`).join('')}</div>`;
+  h+=`<div class="card"><h1>${esc(dd.name)}</h1><div class="sub" style="margin:4px 0 10px">${P.done}/${P.total} sets${UI.day===sug?' · <b style="color:var(--acc)">Up next</b>':` · <button class="btn sm ghost" style="min-height:34px;padding:0 10px" data-act="day" data-day="${sug}">Go to Day ${sug}</button>`}</div><div class="bar ${pct===100?'ok':''}"><i style="width:${pct}%"></i></div></div>`;
+  const fi=firstIncomplete(dd);
+  h+=dd.ex.map((e,i)=>vEx(e,i,dd,fi)).join('');
+  const s=sess(dd.day);
+  if(P.done>0&&!(s&&s.done))h+=`<button class="btn block" data-act="finish-workout">Finish workout early</button>`;
+  if(s&&s.done)h+=`<div class="card" style="border-color:#1d5a33"><b style="color:var(--ok)">✓ Workout complete.</b><div class="sub">Next up: Day ${suggestedDay()}.</div></div>`;
+  return h;
+}
+function prevStr(kind,l){
+  if(!l)return'';
+  if(kind==='lift')return`${l.w!=null?l.w+' kg × ':''}${l.r}`;
+  if(kind==='side')return`${l.w!=null?l.w+' kg × ':''}${l.r}/${l.r2}`;
+  if(kind==='hold')return`${l.r}/${l.r2} s`;
+  return`${l.r} min${l.w!=null?' · lvl '+l.w:''}`;
+}
+function logStr(kind,l){
+  if(kind==='lift')return`${l.w!=null?l.w+' kg × ':''}${l.r} reps`;
+  if(kind==='side')return`${l.w!=null?l.w+' kg × ':''}${l.r} / ${l.r2} reps`;
+  if(kind==='hold')return`${l.r} / ${l.r2} sec`;
+  return`${l.r} min${l.w!=null?' · level '+l.w:''}`;
+}
+function refFor(day,e,i){
+  const p=prevSets(day,e.id);if(!p)return null;
+  return p.sets[i]||p.sets.filter(Boolean).pop()||null;
+}
+function draftFor(day,e,i){
+  const k=day+':'+e.id+':'+i;if(UI.draft[k])return UI.draft[k];
+  const cur=(sess(day)||{sets:{}}).sets[e.id]||[];let w='';
+  for(let j=i-1;j>=0;j--){if(cur[j]){w=cur[j].w==null?'':cur[j].w;break}}
+  if(w===''){const ref=refFor(day,e,i);if(ref&&ref.w!=null)w=ref.w}
+  return{w:w===''?'':String(w),r:'',r2:''};
+}
+const fld=(f,val,ph,lab,mode='numeric')=>`<div style="flex:1;min-width:0"><input class="reps" data-f="${f}" inputmode="${mode}" placeholder="${esc(ph)}" value="${esc(val)}">${lab?`<span class="sidelab">${lab}</span>`:''}</div>`;
+function vSet(day,e,i,kind){
+  const log=getSet(day,e.id,i);
+  const label=kind==='cardio'?'Cardio':`Set ${i+1}`;
+  if(log)return`<div class="set logged"><div class="seth"><b>${label}</b><span class="prev" style="color:#7be59f">✓ ${esc(logStr(kind,log))}</span><button class="btn sm ghost" data-act="undo" data-id="${e.id}" data-i="${i}">Undo</button></div></div>`;
+  const d=draftFor(day,e,i);const ref=refFor(day,e,i);
+  const lo=lowReps(e.reps);const wph=e.wlabel||'kg';
+  let ins='';
+  const stepper=`<div class="stepper"><button type="button" data-act="wstep" data-d="-1.25" aria-label="minus 1.25">−</button><input data-f="w" inputmode="decimal" placeholder="${esc(wph)}" value="${esc(d.w)}" aria-label="${esc(wph)}"><button type="button" data-act="wstep" data-d="1.25" aria-label="plus 1.25">+</button></div>`;
+  if(kind==='lift')ins=`<div class="setin">${stepper}${fld('r',d.r,String(lo||''),'reps')}</div>`;
+  else if(kind==='side')ins=`<div class="setin">${stepper}${fld('r',d.r,String(lo||''),'L reps')}${fld('r2',d.r2,String(lo||''),'R reps')}</div>`;
+  else if(kind==='hold'){const t=lowReps(e.reps);ins=`<div class="setin">${fld('r',d.r,String(t),'L sec')}${fld('r2',d.r2,String(t),'R sec')}</div>`}
+  else{const t=lowReps(e.reps);ins=`<div class="setin">${fld('r',d.r,String(t),'minutes')}${fld('w',d.w,'—','level / resistance','decimal')}</div>`}
+  return`<div class="set" data-id="${e.id}" data-i="${i}"><div class="seth"><b>${label}</b><span class="prev">${ref?'Prev: '+esc(prevStr(kind,ref)):'No previous data'}</span>${ref&&kind!=='cardio'?`<button class="btn sm ghost" data-act="copy" data-id="${e.id}" data-i="${i}">Copy prev</button>`:''}</div>${ins}<button class="btn primary block" style="margin-top:8px" data-act="fin" data-id="${e.id}" data-i="${i}">${kind==='cardio'?'Mark done':'Finish set'}</button></div>`;
+}
+function vEx(e,idx,dd,fi){
+  const m=info(e);const kind=kindOf(e);const n=nSets(e);
+  let done=0;for(let i=0;i<n;i++)if(getSet(dd.day,e.id,i))done++;
+  const key=dd.day+':'+e.id;
+  const open=UI.open[key]!==undefined?UI.open[key]:(fi===e.id);
+  const full=done>=n;
+  const sum=kind==='cardio'?`${e.reps} · RPE ${rpeOf(e)}`:`${n}×${e.reps} · RPE ${rpeOf(e)} · rest ${e.rest_seconds}s`;
+  let h=`<section class="card flat" id="ex-${esc(key.replace(':','-'))}"><button class="exh" data-act="toggle" data-key="${esc(key)}" aria-expanded="${open}">${img(m.img,'thumb',e.name)}<div style="flex:1;min-width:0"><div class="exn">${idx+1}. ${esc(title(e.name))}</div><div class="exs">${esc(title(e.target))} · ${esc(sum)}</div></div><div class="prog ${full?'full':''}">${full?'✓':done+'/'+n}</div></button>`;
+  if(open){
+    const playing=!!UI.gif[key];
+    h+=`<div class="exb"><div class="media"><div class="mwrap">${img(playing?m.gif:m.img,'',e.name)}</div><div class="mside"><button class="btn sm" data-act="play" data-key="${esc(key)}">${playing?'⏸ Show image':'▶ Play animation'}</button><div>`+
+      `<span class="tag">Target: ${esc(e.target)}</span>${(e.secondary_muscles||[]).map(s=>`<span class="tag">${esc(s)}</span>`).join('')}</div>`+
+      `<div class="small mut">Target RPE <b style="color:var(--tx)">${rpeOf(e)}</b>${kind==='cardio'?'':` · Rest <b style="color:var(--tx)">${e.rest_seconds}s</b>`}</div>${done===0&&readyToIncrease(e,dd.day)?'<span class="tag up">▲ Hit the top last time — add load</span>':''}</div></div>`;
+    if(e.note)h+=`<div class="note">${esc(e.note)}</div>`;
+    for(let i=0;i<n;i++)h+=vSet(dd.day,e,i,kind);
+    h+=`<label class="f" for="n-${esc(e.id)}" style="margin-top:8px">My notes</label><textarea id="n-${esc(e.id)}" data-note="${esc(e.id)}" placeholder="Seat setting, grip, how it felt…">${esc(S.notes[e.id]||'')}</textarea>`;
+    h+=`<details ${UI.instr[key]?'open':''} data-key="${esc(key)}"><summary>How to do it</summary>${m.steps.length?`<ol class="steps">${m.steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ol>`:'<p class="mut">No instructions available.</p>'}</details></div>`;
+  }
+  return h+'</section>';
+}
+
+/* ---------- WEIGHT view ---------- */
+const sortedW=()=>S.weights.slice().sort((a,b)=>a.date.localeCompare(b.date));
+function avgWin(endIdx){
+  const xs=S.weights.filter(w=>{const i=didx(w.date);return i<=endIdx&&i>=endIdx-6});
+  return xs.length?{avg:xs.reduce((a,b)=>a+b.kg,0)/xs.length,n:xs.length}:null;
+}
+function pace(){
+  const t=didx(dkey());const cur=avgWin(t),prev=avgWin(t-7),older=avgWin(t-14);
+  if(!cur||!prev)return{state:'none',cur,prev};
+  const loss=r2(prev.avg-cur.avg);
+  let state=loss>1.0?'bad':(loss>=0.4?'ok':'warn');
+  const prevLoss=older?r2(older.avg-prev.avg):null;
+  return{state,loss,cur,prev,twice:state==='bad'&&prevLoss!=null&&prevLoss>1.0,lowData:cur.n<3||prev.n<3};
+}
+function lastDose(){return S.doses.slice().sort((a,b)=>(a.date+(a.t||0)).localeCompare(b.date+(b.t||0))).pop()||null}
+function nextSite(){const l=lastDose();if(!l)return SITES[0];const i=SITES.indexOf(l.site);return SITES[(i+1)%SITES.length]}
+const tuesdayPending=()=>new Date().getDay()===2&&!S.doses.some(d=>d.date===dkey());
+function chartSvg(){
+  const t=didx(dkey());const pts=sortedW().filter(w=>didx(w.date)>=t-55);
+  if(pts.length<2)return'<div class="empty">Log at least two weigh-ins to see your trend.</div>';
+  const W=340,H=150,pl=30,pr=8,pt=10,pb=22;
+  const xs=pts.map(p=>didx(p.date));const ma=pts.map(p=>{const i=didx(p.date);const a=S.weights.filter(w=>{const j=didx(w.date);return j<=i&&j>=i-6});return a.reduce((s,w)=>s+w.kg,0)/a.length});
+  const all=pts.map(p=>p.kg).concat(ma);let mn=Math.min(...all),mx=Math.max(...all);if(mx-mn<2){const c=(mx+mn)/2;mn=c-1;mx=c+1}
+  mn=Math.floor(mn-.3);mx=Math.ceil(mx+.3);
+  const x0=Math.min(...xs),x1=Math.max(...xs,x0+1);
+  const X=i=>pl+(i-x0)/(x1-x0)*(W-pl-pr),Y=v=>pt+(mx-v)/(mx-mn)*(H-pt-pb);
+  const line=ma.map((v,i)=>`${i?'L':'M'}${X(xs[i]).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  const grid=[mn,(mn+mx)/2,mx].map(v=>`<line x1="${pl}" x2="${W-pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="#2c2c34" stroke-width="1"/><text x="${pl-4}" y="${Y(v)+4}" fill="#a3a3ae" font-size="10" text-anchor="end">${r1(v)}</text>`).join('');
+  const dots=pts.map((p,i)=>`<circle cx="${X(xs[i]).toFixed(1)}" cy="${Y(p.kg).toFixed(1)}" r="3" fill="#a3a3ae"/>`).join('');
+  return`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Weight trend, last 8 weeks">${grid}${dots}<path d="${line}" fill="none" stroke="#c8f526" stroke-width="2.5" stroke-linejoin="round"/><text x="${pl}" y="${H-5}" fill="#a3a3ae" font-size="10">${fdate(pts[0].date)}</text><text x="${W-pr}" y="${H-5}" fill="#a3a3ae" font-size="10" text-anchor="end">${fdate(pts[pts.length-1].date)}</text></svg><div class="small mut" style="display:flex;gap:14px"><span><b style="color:#a3a3ae">●</b> daily</span><span><b style="color:var(--acc)">━</b> 7-day average</span></div>`;
+}
+function vWeight(){
+  const p=pace();const today=dkey();const tw=S.weights.find(w=>w.date===today);
+  let h='';
+  if(tuesdayPending())h+=`<div class="card" style="border-color:var(--acc)"><h2>💉 Injection day</h2><p>Weigh in first, then take your weekly dose.</p><button class="btn primary block" data-act="dose-open">Log weight &amp; dose</button></div>`;
+  let badge='',msg='';
+  if(p.state==='none'){badge='<span class="badge none">● Building baseline</span>';msg='Log weigh-ins in two different weeks to see your pace. Daily is best; Tuesday-only also works.'}
+  else{
+    const l=p.loss;
+    if(p.state==='ok'){badge=`<span class="badge ok">● On pace · −${l.toFixed(2)} kg/wk</span>`;msg='Loss is in the 0.4–1.0 kg/week range — optimal for recomposition.'}
+    else if(p.state==='warn'){badge=`<span class="badge warn">● ${l>0?'Slow · −'+l.toFixed(2):(l===0?'Flat · 0.00':'Up · +'+Math.abs(l).toFixed(2))} kg/wk</span>`;msg='Under 0.4 kg/week. Per your plan, cut the 10 g oil/peanuts first, and keep your lifts progressing. Check whether weigh-ins are consistent (same time, before eating).'}
+    else{badge=`<span class="badge bad">● Fast · −${l.toFixed(2)} kg/wk</span>`;msg=(p.twice?'Second week in a row above 1 kg. ':'')+'Per your plan, if you lose more than 1 kg/week for 2 weeks, add ~250 kcal/day (about 50 g dry rice + 1 tsp oil). If it is hard to eat enough, talk to your prescriber.'}
+  }
+  h+=`<div class="card"><h3>Weekly pace</h3><div style="margin:6px 0 10px">${badge}</div>`;
+  if(p.cur&&p.prev)h+=`<div class="grid2" style="margin-bottom:10px"><div><div class="sub">This week avg</div><div class="big">${r1(p.cur.avg).toFixed(1)}<small style="font-size:14px"> kg</small></div><div class="small mut">${p.cur.n} weigh-in${p.cur.n>1?'s':''}</div></div><div><div class="sub">Last week avg</div><div class="big">${r1(p.prev.avg).toFixed(1)}<small style="font-size:14px"> kg</small></div><div class="small mut">${p.prev.n} weigh-in${p.prev.n>1?'s':''}</div></div></div>`;
+  h+=`<p class="sub">${esc(msg)}</p>${p.lowData?'<p class="small" style="color:var(--warn)">Few weigh-ins in one of the weeks — treat this badge as a rough guide.</p>':''}</div>`;
+  h+=`<div class="card"><h3>Weigh-in</h3><div class="row"><input id="wq" inputmode="decimal" placeholder="Today's weight (kg)" value="${tw?tw.kg:''}" aria-label="Weight in kg"><button class="btn primary" data-act="w-save" style="flex:0 0 auto">Save</button></div><div class="small mut" style="margin-top:6px">${tw?'Logged today: '+tw.kg+' kg (saving again replaces it).':'Weigh at the same time each day, before eating.'}</div></div>`;
+  h+=`<div class="card"><h3>Trend · 8 weeks</h3>${chartSvg()}</div>`;
+  const t=didx(dkey());const rows=[];
+  for(let k=0;k<6;k++){const a=avgWin(t-7*k);if(a){const b=avgWin(t-7*(k+1));rows.push({end:t-7*k,a,loss:b?r2(b.avg-a.avg):null})}}
+  if(rows.length){h+=`<div class="card"><h3>Weekly averages</h3><table class="t"><tr><th>Week ending</th><th>Avg</th><th>Change</th></tr>${rows.map(r=>{const d=new Date(r.end*864e5);const k=`${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`;return`<tr><td>${fdate(k)}</td><td>${r1(r.a.avg).toFixed(1)} kg</td><td>${r.loss==null?'—':(r.loss>0?'−':'+')+Math.abs(r.loss).toFixed(2)}</td></tr>`}).join('')}</table></div>`}
+  const ld=lastDose();const ds=S.doses.slice().sort((a,b)=>(b.date+(b.t||0)).localeCompare(a.date+(a.t||0))).slice(0,12);
+  h+=`<div class="card"><h3>Ozempic log</h3>${ld?`<p class="sub">Last dose: <b style="color:var(--tx)">${fdateL(ld.date)}</b> · ${ld.mg} mg · ${esc(ld.site)}<br>Next site in rotation: ${esc(nextSite())}</p>`:'<p class="sub">No doses logged yet.</p>'}`;
+  if(ds.length)h+=`<table class="t"><tr><th>Date</th><th>Dose</th><th>Site</th><th></th></tr>${ds.map(d=>`<tr><td>${fdate(d.date)}</td><td>${d.mg} mg</td><td>${esc(d.site)}</td><td><button class="btn sm ghost" style="min-height:36px" data-act="dose-del" data-t="${d.t}" aria-label="Delete entry">✕</button></td></tr>`).join('')}</table>`;
+  h+=`<button class="btn block" style="margin-top:10px" data-act="dose-open">Log weight &amp; dose</button></div>`;
+  const ws=sortedW().slice(-10).reverse();
+  if(ws.length)h+=`<div class="card"><h3>Recent weigh-ins</h3><table class="t">${ws.map(w=>`<tr><td>${fdateL(w.date)}</td><td>${w.kg} kg</td><td><button class="btn sm ghost" style="min-height:36px" data-act="w-del" data-date="${w.date}" aria-label="Delete weigh-in">✕</button></td></tr>`).join('')}</table></div>`;
+  return h;
+}
+function openDoseModal(){
+  const today=dkey();const tw=S.weights.find(w=>w.date===today);const ld=lastDose();UI.injected=false;
+  const chips=[0.25,0.5,1,2].map(v=>`<button type="button" class="btn sm ${ld&&ld.mg===v?'primary':''}" data-act="dose-chip" data-v="${v}" style="flex:1">${v}</button>`).join('');
+  openModal(`<h2>Tuesday weigh-in &amp; dose</h2><p class="sub"><b style="color:var(--acc)">Step 1.</b> Weigh yourself <u>before</u> injecting.</p><label class="f" for="dw">Body weight (kg)</label><input id="dw" inputmode="decimal" placeholder="e.g. 104.6" value="${tw?tw.kg:''}"><p class="sub" style="margin-top:14px"><b style="color:var(--acc)">Step 2.</b> Then log your injection.</p><label class="f" for="dm">Dose (mg)</label><input id="dm" inputmode="decimal" placeholder="mg" value="${ld?ld.mg:''}"><div class="row" style="margin-top:8px">${chips}</div><label class="f" for="ds" style="margin-top:12px">Injection site</label><select id="ds">${SITES.map(s=>`<option ${s===nextSite()?'selected':''}>${s}</option>`).join('')}</select><button class="btn block" id="dinj" data-act="dose-toggle" style="margin-top:14px">☐ Ozempic dose injected</button><div class="row" style="margin-top:14px"><button class="btn ghost" data-act="dose-later" style="flex:1">Later</button><button class="btn primary" data-act="dose-save" style="flex:2">Save</button></div><p class="small mut" style="margin-top:10px">This app only logs. It never suggests dose changes.</p>`);
+}
+function saveDose(){
+  const today=dkey();const kg=num($('#dw').value);const mg=num($('#dm').value);const site=$('#ds').value;
+  const hasW=S.weights.some(w=>w.date===today);
+  if(kg==null&&!hasW){toast('Enter your weight first (before injecting).');$('#dw').focus();return}
+  if(kg!=null&&(kg<30||kg>400)){toast('That weight looks off — check the number.');return}
+  if(UI.injected&&!(mg>0)){toast('Enter the dose in mg.');$('#dm').focus();return}
+  if(kg!=null){S.weights=S.weights.filter(w=>w.date!==today);S.weights.push({date:today,kg:r1(kg)})}
+  if(UI.injected){S.doses.push({date:today,mg,site,t:Date.now()})}
+  save();closeModal();render();
+  toast(UI.injected?'Saved: weight + dose ✓':'Weight saved');
+}
+
+/* ---------- FOOD view ---------- */
+function vFood(){
+  const today=dkey();const mk=S.meals[today]||{};const water=S.water[today]||0;
+  const eaten=MEALS.filter(m=>mk[m.id]);const kcal=eaten.reduce((a,m)=>a+m.kcal,0),pr=eaten.reduce((a,m)=>a+m.p,0),c=eaten.reduce((a,m)=>a+m.c,0),f=eaten.reduce((a,m)=>a+m.f,0);
+  let h=`<div class="card"><h3>Today · ${fdateL(today)}</h3><div class="grid2"><div><div class="sub">Calories</div><div class="big">${kcal}<small style="font-size:14px"> / ${TARGET.kcal}</small></div><div class="bar" style="margin-top:6px"><i style="width:${Math.min(100,kcal/TARGET.kcal*100)}%"></i></div></div><div><div class="sub">Protein</div><div class="big">${pr}<small style="font-size:14px"> / ${TARGET.protein} g</small></div><div class="bar ${pr>=TARGET.protein*0.95?'ok':''}" style="margin-top:6px"><i style="width:${Math.min(100,pr/TARGET.protein*100)}%"></i></div></div></div><div class="small mut" style="margin-top:8px">Carbs ${c} g · Fat ${f} g · Ozempic tip: eat the protein first at each meal.</div></div>`;
+  h+=MEALS.map(m=>{
+    const on=!!mk[m.id];const showI=!!UI.ing[m.id];
+    return`<section class="card flat"><div class="meal ${on?'on':''}" data-act="meal" data-id="${m.id}" role="checkbox" aria-checked="${on}" tabindex="0"><div class="chk">✓</div><div style="flex:1;min-width:0"><div class="exn">${m.name} <span class="mut" style="font-weight:600">· ${m.time}</span></div><div class="exs">${m.kcal} kcal · P ${m.p} g · C ${m.c} g · F ${m.f} g</div></div></div><div style="padding:0 12px 12px"><button class="btn sm ghost" data-act="ing" data-id="${m.id}" aria-expanded="${showI}">${showI?'Hide':'Show'} ingredients</button>${showI?`<table class="ing">${m.ing.map(i=>`<tr><td>${esc(i[0])}<em>${esc(i[1])}</em></td><td>${i[2]} g</td></tr>`).join('')}</table><div class="small mut" style="margin-top:6px">Raw / as purchased. Chicken: about 52% of the raw weight is edible meat.</div>`:''}</div></section>`;
+  }).join('');
+  const glasses=Math.min(12,Math.floor(water/250));
+  h+=`<div class="card"><h3>Water</h3><div class="big">${(water/1000).toFixed(2).replace(/0$/,'')}<small style="font-size:14px"> / ${TARGET.water/1000} L</small></div><div class="bar ${water>=TARGET.water?'ok':''}" style="margin-top:8px"><i style="width:${Math.min(100,water/TARGET.water*100)}%"></i></div><div class="glasses" aria-hidden="true">${Array.from({length:12},(_,i)=>`<i class="${i<glasses?'on':''}"></i>`).join('')}</div><div class="row"><button class="btn primary" style="flex:2;min-height:60px;font-size:18px" data-act="water" data-ml="250">💧 +250 ml</button><button class="btn" style="flex:1;min-height:60px" data-act="water" data-ml="-250" aria-label="Undo 250 ml">Undo</button></div><div class="small mut" style="margin-top:8px">Resets automatically at midnight. Goal: 3 L a day.</div></div>`;
+  return h;
+}
+
+/* ---------- DATA view ---------- */
+const tg=(k,label,sub)=>`<div class="tgl"><div style="flex:1"><div style="font-weight:700">${label}</div>${sub?`<div class="small mut">${sub}</div>`:''}</div><div class="sw ${S.settings[k]?'on':''}" data-act="tgl" data-k="${k}" role="switch" aria-checked="${!!S.settings[k]}" aria-label="${esc(label)}" tabindex="0"></div></div>`;
+function vData(){
+  const np='Notification' in window?Notification.permission:'unsupported';
+  const nTxt={granted:'On',denied:'Blocked in browser settings',default:'Not enabled',unsupported:'Not supported'}[np];
+  let h=`<div class="card"><h3>Backup</h3><p class="sub">All logs live on this phone only. Export regularly and before clearing browser data.</p><div class="grid2"><button class="btn primary" data-act="export">⬇ Export JSON</button><button class="btn" data-act="import">⬆ Import JSON</button></div></div>`;
+  h+=`<div class="card"><h3>Settings</h3>${tg('deload','Deload week','2 sets per exercise, RPE 6. Plan: every 5th week.')}${tg('wake','Keep screen awake in workouts','Uses the Wake Lock API.')}${tg('sound','Rest-timer sound')}${tg('vibrate','Rest-timer vibration')}<div class="tgl"><div style="flex:1"><div style="font-weight:700">Rest-timer notification</div><div class="small mut">${nTxt}. Mirrors to your watch via Mi Fitness notification access for Chrome.</div></div>${np==='default'?'<button class="btn sm primary" data-act="notif-enable">Enable</button>':''}</div></div>`;
+  h+=`<div class="card"><h3>Tuesday reminder</h3><p class="sub">The app prompts you when you open it on a Tuesday. For a reminder when the app is closed, add a repeating event to your phone calendar (it also buzzes your watch).</p><label class="f" for="rt">Reminder time</label><input id="rt" type="time" value="${esc(S.settings.remindTime)}" data-act="remind-time"><button class="btn block" style="margin-top:10px" data-act="ics">📅 Download weekly calendar event (.ics)</button></div>`;
+  h+=`<div class="card"><h3>Offline media</h3><p class="sub">Thumbnails are cached as you browse. Pre-load everything now so it works without signal at the gym.</p><div class="grid2"><button class="btn" data-act="cache" data-kind="img">Cache images</button><button class="btn" data-act="cache" data-kind="gif">Cache animations</button></div><p class="small mut" id="cachemsg" style="margin-top:8px">${esc(UI.cacheMsg)}</p></div>`;
+  const rc=days().reduce((a,d)=>a+d.ex.length,0);
+  h+=`<div class="card"><h3>Routine</h3><p class="sub">${S.routine?'Custom routine imported':'Built-in routine'}: ${days().length} days, ${rc} exercise slots. The built-in plan swaps Day 4's rear-delt row for the standing lateral-raise machine.</p><div class="grid2"><button class="btn" data-act="routine-import">Import routine.json</button><button class="btn ghost" data-act="routine-reset" ${S.routine?'':'disabled'}>Use built-in</button></div></div>`;
+  h+=`<div class="card"><h3>App</h3>${UI.installEvt?'<button class="btn primary block" data-act="install" style="margin-bottom:10px">Install to home screen</button>':'<p class="sub">To install: Chrome menu → “Add to Home screen”.</p>'}<p class="small mut">Offline engine: ${esc(UI.swState)} · v${VERSION}</p><div id="storinfo" class="small mut"></div></div>`;
+  h+=`<div class="foot">Exercise media © Gym visual — <a href="https://gymvisual.com/" target="_blank" rel="noopener">gymvisual.com</a><br>Exercise data: hasaneyldrm/exercises-dataset (MIT)</div>`;
+  return h;
+}
+
+/* ---------- render ---------- */
+const VIEWS={workout:vWorkout,weight:vWeight,food:vFood,data:vData};
+function render(){
+  $('#datep').textContent=fdateL(dkey());
+  $('#view').innerHTML=(VIEWS[UI.tab]||vWorkout)();
+  $$('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.tab===UI.tab));
+  if(UI.tab==='data')storageInfo();
+}
+async function storageInfo(){
+  try{const el=$('#storinfo');if(!el||!navigator.storage)return;const e=await navigator.storage.estimate();const p=navigator.storage.persisted?await navigator.storage.persisted():false;
+    const e2=$('#storinfo');if(e2)e2.textContent=`Storage: ${(e.usage/1048576).toFixed(1)} MB used · persistent: ${p?'yes':'no'}`}catch(x){}
+}
+
+/* ---------- rest timer ---------- */
+const T={end:0,total:0,label:'',iv:null,fired:false};
+let ac=null,wl=null,wakeWanted=false;
+function unlockAudio(){try{if(!ac){const C=window.AudioContext||window.webkitAudioContext;if(C)ac=new C()}if(ac&&ac.state==='suspended')ac.resume()}catch(e){}}
+function beep(){
+  if(!S.settings.sound||!ac)return;
+  try{const t0=ac.currentTime;[0,.28,.56].forEach((o,i)=>{const os=ac.createOscillator(),g=ac.createGain();os.type='sine';os.frequency.value=i===2?1175:880;g.gain.setValueAtTime(.0001,t0+o);g.gain.exponentialRampToValueAtTime(.5,t0+o+.02);g.gain.exponentialRampToValueAtTime(.0001,t0+o+.22);os.connect(g);g.connect(ac.destination);os.start(t0+o);os.stop(t0+o+.25)})}catch(e){}
+}
+const buzz=p=>{if(S.settings.vibrate&&navigator.vibrate)try{navigator.vibrate(p)}catch(e){}};
+async function notifyRest(label){
+  if(!('Notification' in window)||Notification.permission!=='granted')return;
+  const opts={body:label?'Next: '+label:'Start your next set',tag:'gc-rest',renotify:true,vibrate:[250,100,250,100,250],icon:'icons/icon-192.png',badge:'icons/icon-192.png'};
+  try{const reg=navigator.serviceWorker&&await navigator.serviceWorker.getRegistration();if(reg){await reg.showNotification('Rest over — go!',opts);return}}catch(e){}
+  try{new Notification('Rest over — go!',opts)}catch(e){}
+}
+function persistRest(){lsSet('gc.rest',JSON.stringify({end:T.end,total:T.total,label:T.label}))}
+function startRest(sec,label){
+  T.total=sec;T.end=Date.now()+sec*1000;T.label=label;T.fired=false;persistRest();
+  clearInterval(T.iv);T.iv=setInterval(tick,250);$('#rest').classList.remove('fin');$('#rest').classList.add('show');document.body.classList.add('resting');tick();
+}
+function stopRest(){clearInterval(T.iv);T.iv=null;T.fired=true;$('#rest').classList.remove('show','fin');document.body.classList.remove('resting');try{localStorage.removeItem('gc.rest')}catch(e){}}
+function tick(){
+  const left=Math.max(0,Math.ceil((T.end-Date.now())/1000));
+  $('#rtime').textContent=fmtT(left);$('#rlabel').textContent=left>0?'Rest · next: '+(T.label||'next set'):'Go! Start your next set';
+  $('#rbar').style.width=(T.total?Math.max(0,Math.min(100,left/T.total*100)):0)+'%';
+  if(left<=0&&!T.fired){
+    T.fired=true;clearInterval(T.iv);$('#rest').classList.add('fin');beep();buzz([300,120,300,120,500]);notifyRest(T.label);
+    try{localStorage.removeItem('gc.rest')}catch(e){}
+    setTimeout(()=>{if(T.fired&&$('#rest').classList.contains('fin'))stopRest()},6000);
+  }
+}
+function adjRest(s){
+  if(T.fired){return}
+  T.end+=s*1000;T.total=Math.max(1,T.total+s);persistRest();tick();
+}
+function restoreRest(){
+  try{const o=JSON.parse(lsGet('gc.rest')||'null');if(o&&o.end>Date.now()){T.end=o.end;T.total=o.total;T.label=o.label;T.fired=false;clearInterval(T.iv);T.iv=setInterval(tick,250);$('#rest').classList.add('show');document.body.classList.add('resting');tick()}}catch(e){}
+}
+async function wake(){
+  if(!S.settings.wake||!wakeWanted||!('wakeLock' in navigator))return;
+  try{if(!wl||wl.released)wl=await navigator.wakeLock.request('screen')}catch(e){}
+}
+
+/* ---------- set actions ---------- */
+function finishSet(btn){
+  const id=btn.dataset.id,i=+btn.dataset.i,day=UI.day;const e=exOf(day,id);if(!e)return;
+  const kind=kindOf(e);const row=btn.closest('.set');
+  const g=f=>{const el=row.querySelector(`[data-f="${f}"]`);return el?num(el.value):null};
+  const w=g('w'),a=g('r'),b=g('r2');
+  const two=kind==='side'||kind==='hold';
+  if(!(a>0)||(two&&!(b>0))){toast(two?'Enter reps/seconds for both sides':kind==='cardio'?'Enter the minutes':'Enter the reps you completed');const el=row.querySelector('[data-f="r"]');if(el)el.focus();return}
+  if(w!=null&&(w<0||w>1000)){toast('Check the weight');return}
+  unlockAudio();wakeWanted=true;wake();buzz(25);
+  putSet(day,id,i,{w:w,r:a,r2:two?b:null,t:Date.now()});
+  delete UI.draft[day+':'+id+':'+i];
+  const dd=dayObj(day);const P=progress(dd);const s=sess(day,true);
+  const key=day+':'+id;const n=nSets(e);let cnt=0;for(let j=0;j<n;j++)if(getSet(day,id,j))cnt++;
+  let scrollTo=null;
+  if(cnt>=n){UI.open[key]=false;const nx=firstIncomplete(dd);if(nx){UI.open[day+':'+nx]=true;scrollTo=day+'-'+nx}}
+  if(P.done>=P.total&&!s.done){s.done=true;s.t=Date.now();toast('Workout complete — nice work 💪',3500);stopRest()}
+  else if(kind!=='cardio'&&e.rest_seconds>0){
+    const nxe=cnt>=n?(()=>{const x=firstIncomplete(dd);return x?title(exOf(day,x).name):''})():title(e.name);
+    startRest(e.rest_seconds,nxe);
+  }
+  save();render();
+  if(scrollTo){const el=document.getElementById('ex-'+scrollTo);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})}
+}
+
+/* ---------- ICS ---------- */
+function makeICS(){
+  const [hh,mm]=(S.settings.remindTime||'07:00').split(':').map(Number);
+  const d=new Date();d.setHours(hh,mm,0,0);while(d.getDay()!==2||d<new Date())d.setDate(d.getDate()+1);
+  const f=x=>`${x.getFullYear()}${pad(x.getMonth()+1)}${pad(x.getDate())}T${pad(x.getHours())}${pad(x.getMinutes())}00`;
+  const e=new Date(d.getTime()+15*60000);const now=new Date();
+  const stamp=`${now.getUTCFullYear()}${pad(now.getUTCMonth()+1)}${pad(now.getUTCDate())}T${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}00Z`;
+  return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Gym Companion//EN','CALSCALE:GREGORIAN','BEGIN:VEVENT','UID:gym-companion-tuesday@gabo53.github.io','DTSTAMP:'+stamp,'DTSTART:'+f(d),'DTEND:'+f(e),'RRULE:FREQ=WEEKLY;BYDAY=TU','SUMMARY:Weigh in, then Ozempic dose','DESCRIPTION:Log body weight BEFORE the weekly injection. Open Gym Companion to record both.','BEGIN:VALARM','TRIGGER:PT0S','ACTION:DISPLAY','DESCRIPTION:Weigh in, then Ozempic dose','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+}
+function download(name,text,type){
+  const b=new Blob([text],{type});const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},1500);
+}
+function pickFile(cb){
+  const i=document.createElement('input');i.type='file';i.accept='.json,application/json';
+  i.onchange=()=>{const f=i.files&&i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>cb(String(r.result));r.onerror=()=>toast('Could not read that file');r.readAsText(f)};i.click();
+}
+async function cacheMedia(kind){
+  if(!('caches' in window)){toast('Caching is not supported here');return}
+  const ids=[...new Set(R().map(e=>e.id))];const urls=[];
+  R().forEach(e=>{const m=info(e);const p=kind==='gif'?m.gif:m.img;const u=imgUrl(p);if(u&&!urls.includes(u))urls.push(u)});
+  const c=await caches.open('gc-media-v1');let ok=0,fail=0;
+  const set=()=>{UI.cacheMsg=`Cached ${ok}/${urls.length}${fail?` · ${fail} failed`:''}…`;const el=$('#cachemsg');if(el)el.textContent=UI.cacheMsg};
+  for(let i=0;i<urls.length;i+=4){
+    await Promise.all(urls.slice(i,i+4).map(async u=>{
+      try{if(await c.match(u)){ok++;return}let r;try{r=await fetch(u,{mode:'cors'})}catch(x){r=await fetch(u,{mode:'no-cors'})}
+        if(r&&(r.ok||r.type==='opaque')){await c.put(u,r);ok++}else fail++}catch(x){fail++}
+    }));set();
+  }
+  UI.cacheMsg=fail?`Done: ${ok} cached, ${fail} failed (check connection).`:`All ${ok} ${kind==='gif'?'animations':'images'} cached for offline.`;
+  const el=$('#cachemsg');if(el)el.textContent=UI.cacheMsg;toast(UI.cacheMsg,3500);
+}
+function validRoutine(a){
+  return Array.isArray(a)&&a.length>0&&a.every(e=>e&&typeof e==='object'&&e.day!=null&&e.id!=null&&e.name&&e.order!=null&&e.sets!=null&&e.reps!=null);
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',ev=>{
+  const tab=ev.target.closest('[data-tab]');
+  if(tab){UI.tab=tab.dataset.tab;lsSet('gc.tab',UI.tab);render();window.scrollTo(0,0);return}
+  const el=ev.target.closest('[data-act]');if(!el)return;
+  const a=el.dataset.act;
+  if(a==='ov-close'){if(ev.target===el){closeModal();UI.snooze=Date.now()+30*60000}return}
+  if(a==='remind-time')return;
+  switch(a){
+    case'day':UI.day=+el.dataset.day;render();window.scrollTo(0,0);break;
+    case'toggle':{const k=el.dataset.key;const [d,id]=k.split(':');const dd=dayObj(+d);const cur=UI.open[k]!==undefined?UI.open[k]:(firstIncomplete(dd)===id);UI.open[k]=!cur;render();break}
+    case'play':{UI.gif[el.dataset.key]=!UI.gif[el.dataset.key];render();break}
+    case'wstep':{const inp=el.parentElement.querySelector('input');const cur=num(inp.value)||0;const v=Math.max(0,r2(cur+ +el.dataset.d));inp.value=v;inp.dispatchEvent(new Event('input',{bubbles:true}));break}
+    case'fin':finishSet(el);break;
+    case'undo':{const id=el.dataset.id,i=+el.dataset.i,day=UI.day;const l=getSet(day,id,i);if(l){UI.draft[day+':'+id+':'+i]={w:l.w==null?'':String(l.w),r:String(l.r),r2:l.r2==null?'':String(l.r2)};const s=sess(day);s.sets[id][i]=null;s.done=false;save();render()}break}
+    case'copy':{const id=el.dataset.id,i=+el.dataset.i,day=UI.day;const e=exOf(day,id);const ref=refFor(day,e,i);if(ref){UI.draft[day+':'+id+':'+i]={w:ref.w==null?'':String(ref.w),r:String(ref.r),r2:ref.r2==null?'':String(ref.r2)};render()}break}
+    case'finish-workout':{const s=sess(UI.day,true);s.done=true;s.t=Date.now();stopRest();save();render();toast('Workout saved');break}
+    case'notif-enable':{S.settings.notifyAsked=true;save();if('Notification' in window)Notification.requestPermission().then(p=>{render();toast(p==='granted'?'Alerts enabled':'Alerts not enabled')});break}
+    case'dose-open':openDoseModal();break;
+    case'dose-chip':{$('#dm').value=el.dataset.v;$$('[data-act="dose-chip"]').forEach(b=>b.classList.toggle('primary',b===el));break}
+    case'dose-toggle':{UI.injected=!UI.injected;el.textContent=(UI.injected?'☑':'☐')+' Ozempic dose injected';el.classList.toggle('primary',UI.injected);break}
+    case'dose-save':saveDose();break;
+    case'dose-later':closeModal();UI.snooze=Date.now()+30*60000;break;
+    case'dose-del':{if(confirm('Delete this dose entry?')){S.doses=S.doses.filter(d=>String(d.t)!==el.dataset.t);save();render()}break}
+    case'w-save':{const kg=num($('#wq').value);if(kg==null||kg<30||kg>400){toast('Enter a valid weight in kg');break}const t=dkey();S.weights=S.weights.filter(w=>w.date!==t);S.weights.push({date:t,kg:r1(kg)});save();render();toast('Weight saved');break}
+    case'w-del':{if(confirm('Delete this weigh-in?')){S.weights=S.weights.filter(w=>w.date!==el.dataset.date);save();render()}break}
+    case'meal':{const t=dkey();const m=S.meals[t]||(S.meals[t]={});m[el.dataset.id]=!m[el.dataset.id];save();render();break}
+    case'ing':UI.ing[el.dataset.id]=!UI.ing[el.dataset.id];render();break;
+    case'water':{const t=dkey();S.water[t]=Math.max(0,(S.water[t]||0)+ +el.dataset.ml);save();render();buzz(15);break}
+    case'tgl':{const k=el.dataset.k;S.settings[k]=!S.settings[k];if(k==='wake'&&S.settings.wake)wake();save();render();break}
+    case'export':{const out=Object.assign({app:'gym-companion',exportedAt:new Date().toISOString()},S);download(`gym-companion-backup-${dkey()}.json`,JSON.stringify(out,null,1),'application/json');toast('Backup downloaded');break}
+    case'import':pickFile(txt=>{try{const o=JSON.parse(txt);if(!o||typeof o!=='object'||typeof o.sessions!=='object'||!Array.isArray(o.weights))throw 0;
+      if(!confirm('Replace ALL current data with this backup?'))return;delete o.app;delete o.exportedAt;S=Object.assign(def(),o);S.settings=Object.assign(def().settings,o.settings||{});_dc=null;save();UI.day=suggestedDay();render();toast('Backup restored')}catch(x){toast('That file is not a Gym Companion backup')}});break;
+    case'routine-import':pickFile(txt=>{try{const o=JSON.parse(txt);if(!validRoutine(o))throw 0;S.routine=o;_dc=null;save();UI.day=suggestedDay();render();toast(`Routine imported (${o.length} rows)`)}catch(x){toast('Not a valid routine.json')}});break;
+    case'routine-reset':if(confirm('Switch back to the built-in routine? Your logs are kept.')){S.routine=null;_dc=null;save();UI.day=suggestedDay();render()}break;
+    case'ics':download('gym-companion-tuesday.ics',makeICS(),'text/calendar');toast('Open the file to add it to your calendar');break;
+    case'cache':cacheMedia(el.dataset.kind);break;
+    case'install':if(UI.installEvt){UI.installEvt.prompt();UI.installEvt=null;render()}break;
+    case'rest-adj':adjRest(+el.dataset.s);break;
+    case'rest-skip':stopRest();break;
+  }
+});
+document.addEventListener('keydown',ev=>{if((ev.key==='Enter'||ev.key===' ')&&ev.target.matches&&ev.target.matches('[role="checkbox"],[role="switch"]')){ev.preventDefault();ev.target.click()}});
+document.addEventListener('input',ev=>{
+  const t=ev.target;
+  if(t.dataset&&t.dataset.f){const row=t.closest('.set');if(row){const k=UI.day+':'+row.dataset.id+':'+row.dataset.i;const d=UI.draft[k]||(UI.draft[k]={w:'',r:'',r2:''});
+    ['w','r','r2'].forEach(f=>{const el=row.querySelector(`[data-f="${f}"]`);if(el)d[f]=el.value})}}
+  else if(t.dataset&&t.dataset.note){S.notes[t.dataset.note]=t.value;save()}
+});
+document.addEventListener('change',ev=>{const t=ev.target;if(t.dataset&&t.dataset.act==='remind-time'&&t.value){S.settings.remindTime=t.value;save()}});
+document.addEventListener('toggle',ev=>{const t=ev.target;if(t.tagName==='DETAILS'&&t.dataset.key)UI.instr[t.dataset.key]=t.open},true);
+document.addEventListener('error',ev=>{
+  const t=ev.target;if(!(t&&t.tagName==='IMG'&&t.dataset.img))return;
+  if(t.hasAttribute('crossorigin')){t.removeAttribute('crossorigin');t.src=t.src}
+  else{t.style.visibility='hidden'}
+},true);
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();UI.installEvt=e;if(UI.tab==='data')render()});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'){wake();if(T.end&&!T.fired)tick();const keep=document.activeElement&&document.activeElement.tagName==='INPUT';if(!keep&&!UI.modalOpen)render();maybeTuesday()}
+  else flush();
+});
+window.addEventListener('pagehide',flush);
+
+function maybeTuesday(){if(!UI.modalOpen&&tuesdayPending()&&Date.now()>UI.snooze)openDoseModal()}
+
+/* ---------- service worker ---------- */
+async function initSW(){
+  if(!('serviceWorker' in navigator)){UI.swState='not supported';return}
+  try{
+    const reg=await navigator.serviceWorker.register('sw.js');UI.swState=navigator.serviceWorker.controller?'active':'installing…';
+    navigator.serviceWorker.ready.then(()=>{UI.swState='active';if(UI.tab==='data')render()});
+    reg.addEventListener('updatefound',()=>{const nw=reg.installing;if(nw)nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)toast('Update ready — reload the app to apply',6000)})});
+  }catch(e){UI.swState='unavailable (needs https)'}
+  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+}
+
+/* ---------- boot ---------- */
+(async function boot(){
+  await load();
+  UI.day=suggestedDay();
+  if(!VIEWS[UI.tab])UI.tab='workout';
+  render();restoreRest();initSW();maybeTuesday();
+  window.__gc={get S(){return S},UI,render,days,pace,makeICS};
+})();
+})();
+</script>
 </body>
 </html>

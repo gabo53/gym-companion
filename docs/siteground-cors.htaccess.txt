@@ -1,0 +1,10 @@
+# Put this in the .htaccess of the folder that holds /images and /videos on SiteGround
+# (public_html/ or the gym-media subdomain's document root).
+# It lets the PWA cache the files as normal (non-opaque) responses.
+<IfModule mod_headers.c>
+  <FilesMatch "\.(jpe?g|png|gif|webp)$">
+    Header set Access-Control-Allow-Origin "https://gabo53.github.io"
+    Header set Cross-Origin-Resource-Policy "cross-origin"
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>

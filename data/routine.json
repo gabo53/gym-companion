@@ -1,0 +1,900 @@
+[
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 1,
+  "id": "0577",
+  "name": "lever chest press",
+  "equipment": "leverage machine",
+  "target": "pectorals",
+  "secondary_muscles": [
+   "triceps",
+   "shoulders"
+  ],
+  "sets": 4,
+  "reps": "8-10",
+  "rpe": 8,
+  "rest_seconds": 120
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 2,
+  "id": "1299",
+  "name": "lever incline chest press",
+  "equipment": "leverage machine",
+  "target": "pectorals",
+  "secondary_muscles": [
+   "shoulders",
+   "triceps"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 3,
+  "id": "0603",
+  "name": "lever shoulder press",
+  "equipment": "leverage machine",
+  "target": "delts",
+  "secondary_muscles": [
+   "triceps",
+   "chest"
+  ],
+  "sets": 3,
+  "reps": "8-10",
+  "rpe": 8,
+  "rest_seconds": 120
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 4,
+  "id": "0584",
+  "name": "lever lateral raise",
+  "equipment": "leverage machine",
+  "target": "delts",
+  "secondary_muscles": [
+   "traps",
+   "upper back"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 5,
+  "id": "0596",
+  "name": "lever seated fly",
+  "equipment": "leverage machine",
+  "target": "pectorals",
+  "secondary_muscles": [
+   "deltoids",
+   "trapezius"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 6,
+  "id": "0241",
+  "name": "cable triceps pushdown (v-bar)",
+  "equipment": "cable",
+  "target": "triceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 7,
+  "id": "0194",
+  "name": "cable overhead triceps extension (rope attachment)",
+  "equipment": "cable",
+  "target": "triceps",
+  "secondary_muscles": [
+   "shoulders"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 8,
+  "id": "0212",
+  "name": "cable seated crunch",
+  "equipment": "cable",
+  "target": "abs",
+  "secondary_muscles": [
+   "obliques"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 1,
+  "day_name": "Push A – Chest / Shoulders / Triceps",
+  "order": 9,
+  "id": "2138",
+  "name": "stationary bike run v. 3",
+  "equipment": "stationary bike",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "10 min easy",
+  "rpe": 5,
+  "rest_seconds": 0
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 1,
+  "id": "0017",
+  "name": "assisted pull-up",
+  "equipment": "leverage machine",
+  "target": "lats",
+  "secondary_muscles": [
+   "biceps",
+   "forearms"
+  ],
+  "sets": 4,
+  "reps": "6-10",
+  "rpe": 8,
+  "rest_seconds": 120,
+  "note": "The weight here is the machine's assistance. More assistance = easier, so progress by lowering it.",
+  "wlabel": "Assist kg"
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 2,
+  "id": "1350",
+  "name": "lever seated row",
+  "equipment": "leverage machine",
+  "target": "upper back",
+  "secondary_muscles": [
+   "biceps",
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 3,
+  "id": "0581",
+  "name": "lever high row",
+  "equipment": "leverage machine",
+  "target": "upper back",
+  "secondary_muscles": [
+   "biceps",
+   "rear deltoids"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 4,
+  "id": "0237",
+  "name": "cable straight arm pulldown (with rope)",
+  "equipment": "cable",
+  "target": "lats",
+  "secondary_muscles": [
+   "biceps",
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 5,
+  "id": "0602",
+  "name": "lever seated reverse fly",
+  "equipment": "leverage machine",
+  "target": "delts",
+  "secondary_muscles": [
+   "trapezius",
+   "rhomboids"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 6,
+  "id": "0592",
+  "name": "lever preacher curl",
+  "equipment": "leverage machine",
+  "target": "biceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 7,
+  "id": "0313",
+  "name": "dumbbell hammer curl",
+  "equipment": "dumbbell",
+  "target": "biceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 2,
+  "day_name": "Pull A – Lats / Upper Back / Biceps",
+  "order": 8,
+  "id": "2138",
+  "name": "stationary bike run v. 3",
+  "equipment": "stationary bike",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "10 min easy",
+  "rpe": 5,
+  "rest_seconds": 0
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 1,
+  "id": "2611",
+  "name": "lever horizontal one leg press",
+  "equipment": "leverage machine",
+  "target": "glutes",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 4,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 120
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 2,
+  "id": "2287",
+  "name": "lever alternate leg press",
+  "equipment": "leverage machine",
+  "target": "quads",
+  "secondary_muscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 3,
+  "id": "0585",
+  "name": "lever leg extension",
+  "equipment": "leverage machine",
+  "target": "quads",
+  "secondary_muscles": [
+   "hamstrings"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 75
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 4,
+  "id": "0599",
+  "name": "lever seated leg curl",
+  "equipment": "leverage machine",
+  "target": "hamstrings",
+  "secondary_muscles": [
+   "calves"
+  ],
+  "sets": 4,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 5,
+  "id": "2286",
+  "name": "lever hip extension v. 2",
+  "equipment": "leverage machine",
+  "target": "glutes",
+  "secondary_muscles": [
+   "hamstrings"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 6,
+  "id": "0594",
+  "name": "lever seated calf raise",
+  "equipment": "leverage machine",
+  "target": "calves",
+  "secondary_muscles": [
+   "soleus",
+   "ankle stabilizers"
+  ],
+  "sets": 4,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 7,
+  "id": "0597",
+  "name": "lever seated hip abduction",
+  "equipment": "leverage machine",
+  "target": "abductors",
+  "secondary_muscles": [
+   "glutes",
+   "hamstrings"
+  ],
+  "sets": 3,
+  "reps": "15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 3,
+  "day_name": "Legs A – Quads / Glutes / Hamstrings (sciatica-safe)",
+  "order": 8,
+  "id": "2138",
+  "name": "stationary bike run v. 3",
+  "equipment": "stationary bike",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "10 min easy",
+  "rpe": 5,
+  "rest_seconds": 0
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 1,
+  "id": "0748",
+  "name": "smith bench press",
+  "equipment": "smith machine",
+  "target": "pectorals",
+  "secondary_muscles": [
+   "triceps",
+   "shoulders"
+  ],
+  "sets": 4,
+  "reps": "6-8",
+  "rpe": 8,
+  "rest_seconds": 150
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 2,
+  "id": "1313",
+  "name": "lever unilateral row",
+  "equipment": "leverage machine",
+  "target": "upper back",
+  "secondary_muscles": [
+   "biceps",
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "8-10 / side",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 3,
+  "id": "0765",
+  "name": "smith seated shoulder press",
+  "equipment": "smith machine",
+  "target": "delts",
+  "secondary_muscles": [
+   "triceps",
+   "upper back"
+  ],
+  "sets": 3,
+  "reps": "8-10",
+  "rpe": 8,
+  "rest_seconds": 120
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 4,
+  "id": "0178",
+  "name": "cable lateral raise",
+  "equipment": "cable",
+  "target": "delts",
+  "secondary_muscles": [
+   "traps",
+   "triceps"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 5,
+  "id": "0607",
+  "name": "lever triceps extension",
+  "equipment": "leverage machine",
+  "target": "triceps",
+  "secondary_muscles": [
+   "shoulders"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 6,
+  "id": "1641",
+  "name": "cable seated curl",
+  "equipment": "cable",
+  "target": "biceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 7,
+  "id": "custom-skelcore-lateral",
+  "name": "standing lateral raise (pin-load machine)",
+  "equipment": "pin-load machine",
+  "target": "delts",
+  "secondary_muscles": [
+   "traps"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60,
+  "note": "Replaces the cable rear-delt row (its hip-hinge cue conflicts with your plan). The animation shown is the closest dataset move (seated lever lateral raise)."
+ },
+ {
+  "day": 4,
+  "day_name": "Upper B – Strength Bias",
+  "order": 8,
+  "id": "2138",
+  "name": "stationary bike run v. 3",
+  "equipment": "stationary bike",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "10 min easy",
+  "rpe": 5,
+  "rest_seconds": 0
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 1,
+  "id": "2611",
+  "name": "lever horizontal one leg press",
+  "equipment": "leverage machine",
+  "target": "glutes",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "calves"
+  ],
+  "sets": 3,
+  "reps": "15",
+  "rpe": 7,
+  "rest_seconds": 90
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 2,
+  "id": "0586",
+  "name": "lever lying leg curl",
+  "equipment": "leverage machine",
+  "target": "hamstrings",
+  "secondary_muscles": [
+   "calves"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 3,
+  "id": "0585",
+  "name": "lever leg extension",
+  "equipment": "leverage machine",
+  "target": "quads",
+  "secondary_muscles": [
+   "hamstrings"
+  ],
+  "sets": 3,
+  "reps": "15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 4,
+  "id": "0228",
+  "name": "cable standing hip extension",
+  "equipment": "cable",
+  "target": "glutes",
+  "secondary_muscles": [
+   "hamstrings",
+   "quadriceps"
+  ],
+  "sets": 3,
+  "reps": "12-15 / leg",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 5,
+  "id": "0598",
+  "name": "lever seated hip adduction",
+  "equipment": "leverage machine",
+  "target": "adductors",
+  "secondary_muscles": [
+   "hamstrings",
+   "glutes"
+  ],
+  "sets": 3,
+  "reps": "15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 6,
+  "id": "1385",
+  "name": "lever seated squat calf raise on leg press machine",
+  "equipment": "leverage machine",
+  "target": "calves",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "glutes"
+  ],
+  "sets": 4,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 7,
+  "id": "0600",
+  "name": "lever seated leg raise crunch",
+  "equipment": "leverage machine",
+  "target": "abs",
+  "secondary_muscles": [
+   "hip flexors"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 5,
+  "day_name": "Legs B + Core",
+  "order": 8,
+  "id": "0175",
+  "name": "cable kneeling crunch",
+  "equipment": "cable",
+  "target": "abs",
+  "secondary_muscles": [
+   "obliques"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 1,
+  "id": "2330",
+  "name": "cable lat pulldown full range of motion",
+  "equipment": "cable",
+  "target": "lats",
+  "secondary_muscles": [
+   "biceps",
+   "rhomboids",
+   "rear deltoids"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90,
+  "note": "Form note: the dataset cue says \"slight arch in your lower back\". Keep a neutral spine instead (sciatica-safe plan)."
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 2,
+  "id": "0861",
+  "name": "cable seated row",
+  "equipment": "cable",
+  "target": "upper back",
+  "secondary_muscles": [
+   "biceps",
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "10-12",
+  "rpe": 8,
+  "rest_seconds": 90
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 3,
+  "id": "0227",
+  "name": "cable standing fly",
+  "equipment": "cable",
+  "target": "pectorals",
+  "secondary_muscles": [
+   "deltoids",
+   "triceps"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 4,
+  "id": "0215",
+  "name": "cable seated rear lateral raise",
+  "equipment": "cable",
+  "target": "delts",
+  "secondary_muscles": [
+   "traps",
+   "rhomboids"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 5,
+  "id": "0200",
+  "name": "cable pushdown (with rope attachment)",
+  "equipment": "cable",
+  "target": "triceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 6,
+  "id": "0868",
+  "name": "cable curl",
+  "equipment": "cable",
+  "target": "biceps",
+  "secondary_muscles": [
+   "forearms"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 9,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 7,
+  "id": "0220",
+  "name": "cable shrug",
+  "equipment": "cable",
+  "target": "traps",
+  "secondary_muscles": [
+   "shoulders"
+  ],
+  "sets": 3,
+  "reps": "12-15",
+  "rpe": 8,
+  "rest_seconds": 60
+ },
+ {
+  "day": 6,
+  "day_name": "Upper C – Pump / Delts / Arms + Stepmill",
+  "order": 8,
+  "id": "2311",
+  "name": "walking on stepmill",
+  "equipment": "stepmill machine",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "glutes",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "15 min moderate",
+  "rpe": 6,
+  "rest_seconds": 0
+ },
+ {
+  "day": 7,
+  "day_name": "Active Recovery – Zone 2 Cardio + Core + Light Stretch",
+  "order": 1,
+  "id": "2141",
+  "name": "walk elliptical cross trainer",
+  "equipment": "elliptical machine",
+  "target": "cardiovascular system",
+  "secondary_muscles": [
+   "quadriceps",
+   "hamstrings",
+   "glutes",
+   "calves"
+  ],
+  "sets": 1,
+  "reps": "35 min zone 2",
+  "rpe": 5,
+  "rest_seconds": 0
+ },
+ {
+  "day": 7,
+  "day_name": "Active Recovery – Zone 2 Cardio + Core + Light Stretch",
+  "order": 2,
+  "id": "0276",
+  "name": "dead bug",
+  "equipment": "body weight",
+  "target": "abs",
+  "secondary_muscles": [
+   "hip flexors",
+   "lower back"
+  ],
+  "sets": 3,
+  "reps": "10 / side",
+  "rpe": 6,
+  "rest_seconds": 45
+ },
+ {
+  "day": 7,
+  "day_name": "Active Recovery – Zone 2 Cardio + Core + Light Stretch",
+  "order": 3,
+  "id": "3544",
+  "name": "bodyweight incline side plank",
+  "equipment": "body weight",
+  "target": "abs",
+  "secondary_muscles": [
+   "obliques",
+   "shoulders"
+  ],
+  "sets": 2,
+  "reps": "30 sec / side",
+  "rpe": 6,
+  "rest_seconds": 45
+ },
+ {
+  "day": 7,
+  "day_name": "Active Recovery – Zone 2 Cardio + Core + Light Stretch",
+  "order": 4,
+  "id": "0874",
+  "name": "cable standing crunch (with rope attachment)",
+  "equipment": "cable",
+  "target": "abs",
+  "secondary_muscles": [
+   "obliques"
+  ],
+  "sets": 3,
+  "reps": "15",
+  "rpe": 7,
+  "rest_seconds": 45
+ }
+]
