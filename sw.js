@@ -1,5 +1,5 @@
 /* Gym Companion service worker: offline app shell + cached exercise media */
-const VERSION = 'gc-v1.2.0';
+const VERSION = 'gc-v1.3.0';
 const SHELL = 'gc-shell-' + VERSION;
 const MEDIA_CACHE = 'gc-media-v1';
 const MEDIA_HOST = 'gym-media.zazdelivery.com';
